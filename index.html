@@ -1611,7 +1611,13 @@ function updateExpenseCard(key, o){
   const oDone = isTruthyFlag(pick(o,'오_확정여부'));
 
   rowEl.querySelector('.job-name').innerHTML = renderTag(item || '항목 없음');
-  rowEl.querySelector('.job-meta').textContent = date || '';
+  // 일자 칸이 비어 있으면 작성한 날짜를 대신 보여준다 (빈칸으로 두지 않고, 어디서 온 날짜인지 표시)
+  let dateLabel = date || '';
+  if(!dateLabel){
+    const c = expenseCreatedAt(id);
+    if(c) dateLabel = c.slice(2, 10).replace(/-/g, '/') + ' (작성일)';
+  }
+  rowEl.querySelector('.job-meta').textContent = dateLabel;
   const amountNum = Number(String(amount || '').replace(/[^0-9.\-]/g, ''));
   const amountFmt = amount ? (isNaN(amountNum) ? amount : amountNum.toLocaleString('ko-KR') + '원') : '';
   const createdAt = expenseCreatedAt(id);
@@ -1777,7 +1783,15 @@ let showingPastExpenses = false;
 // 지출 날짜를 숫자로 (최신순 정렬용). 날짜 없는 행은 맨 아래로
 function expenseDateVal(o){
   const p = parseSheetDate(pick(o,'일자'));
-  return p ? (p.y * 10000 + p.m * 100 + p.d) : -1;
+  if(p) return p.y * 10000 + p.m * 100 + p.d;
+  // 시트의 일자 칸이 비어 있으면 '작성한 날짜'로 대신 줄을 세운다
+  // (예전엔 날짜 없는 줄이 무조건 맨 아래로 밀려서, 오늘 쓴 지출도 맨 끝에 있었다)
+  const c = expenseCreatedAt(pick(o,'ID','id'));
+  if(c){
+    const [y, m, d] = c.slice(0, 10).split('-').map(Number);
+    return y * 10000 + m * 100 + d;
+  }
+  return -1;
 }
 
 function renderExpenses(objs){
