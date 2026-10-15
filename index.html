@@ -1,0 +1,2555 @@
+<meta charset="utf-8">
+<script>
+// 서비스 워커 캐시 강제 삭제 — 새 버전 배포 시 자동 적용
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  });
+  caches.keys().then(names => {
+    names.forEach(n => caches.delete(n));
+  });
+}
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>하우스 설치</title>
+<link rel="icon" type="image/png" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" sizes="512x512" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="하우스 설치">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#16894A">
+<!-- Firebase: 설정을 채우면 실시간 동기화가 켜집니다. 채우지 않으면 자동으로 로컬 전용 모드로 동작합니다. -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-database-compat.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EBF0E9;
+    --surface:#FFFFFF;
+    --ink:#15241C;
+    --ink-soft:#5C6D62;
+    --ink-faint:#9AA89E;
+    --green:#16894A;
+    --green-deep:#0E6235;
+    --green-tint:#E8F3EC;
+    --amber:#B97509;
+    --amber-tint:#FBF1DE;
+    --blue:#2563EB;
+    --blue-deep:#1D4ED8;
+    --blue-tint:#EAF1FD;
+    --line:#D6DED4;
+    --line-soft:#E7EDE5;
+    --shadow:0 1px 2px rgba(20,40,28,.05), 0 8px 24px rgba(20,40,28,.06);
+    --kor:"Pretendard","Pretendard Variable",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{
+    font-family:var(--kor);
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 16px 64px}
+  @media (min-width:700px){ .wrap{max-width:760px} }
+  @media (min-width:980px){ .wrap{max-width:920px} }
+
+  /* ── Sticky header / thermometer ── */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:20;
+    background:var(--bg);
+    padding:18px 0 14px;
+    border-bottom:1px solid var(--line);
+  }
+  .head-inner{max-width:560px;margin:0 auto;padding:0 40px 0 44px}
+  @media (min-width:700px){ .head-inner{max-width:760px} }
+  @media (min-width:980px){ .head-inner{max-width:920px} }
+  .title-sub{
+    font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--green-deep);
+  }
+  .head-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:2px;flex-wrap:wrap}
+  h1{font-size:25px;font-weight:800;letter-spacing:-.02em;margin:0}
+  .name-picker-overlay{
+    position:fixed;inset:0;background:rgba(21,36,28,.55);z-index:100;
+    display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  .name-picker-overlay[hidden]{display:none}
+  .name-picker-box{
+    background:var(--surface);border-radius:18px;padding:22px 20px;
+    max-width:340px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.25);
+  }
+  .name-picker-title{font-size:17px;font-weight:800;letter-spacing:-.01em}
+  .name-picker-sub{font-size:12.5px;color:var(--ink-soft);margin-top:3px;margin-bottom:14px}
+  .code-input{
+    width:100%;box-sizing:border-box;border:1.5px solid var(--line);border-radius:12px;
+    padding:14px;font-family:var(--mono);font-size:24px;letter-spacing:.3em;
+    text-align:center;color:var(--ink);background:var(--bg);
+  }
+  .code-input:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  .code-error{font-size:12.5px;color:var(--amber);margin-top:8px}
+  .code-submit-btn{
+    width:100%;margin-top:12px;border:none;background:var(--blue);color:#fff;
+    font-family:var(--kor);font-size:15px;font-weight:700;
+    padding:12px;border-radius:12px;cursor:pointer;
+  }
+  .code-submit-btn:hover{background:var(--blue-deep)}
+  .reset{
+    flex:none;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink-soft);font-family:var(--kor);font-size:13px;font-weight:600;
+    padding:8px 12px;border-radius:999px;cursor:pointer;white-space:nowrap;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .reset:hover{border-color:var(--ink-soft)}
+  .reset.confirm{border-color:var(--amber);color:var(--amber);background:var(--amber-tint)}
+  .reset:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+
+  /* thermometer */
+  .thermo{display:flex;align-items:center;gap:12px;margin-top:14px}
+  .thermo-bulb{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    background:var(--line-soft);border:3px solid #fff;
+    box-shadow:0 0 0 1px var(--line);position:relative;transition:background .4s;
+  }
+  .thermo-bulb.warm{background:var(--green)}
+  .thermo-tube{
+    position:relative;flex:1;height:16px;border-radius:999px;
+    background:var(--line-soft);box-shadow:inset 0 0 0 1px var(--line);
+    overflow:hidden;margin-left:-14px;padding-left:14px;
+  }
+  .thermo-fill{
+    position:absolute;left:0;top:0;height:100%;width:0;
+    background:linear-gradient(90deg,var(--green-deep),var(--green));
+    border-radius:999px;transition:width .45s cubic-bezier(.4,0,.2,1);
+  }
+  .pct{font-family:var(--mono);font-weight:700;font-size:15px;color:var(--green-deep);min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
+  .done-flag{
+    margin-top:10px;font-size:13px;font-weight:700;color:var(--green-deep);
+    display:none;align-items:center;gap:6px;
+  }
+  .done-flag.show{display:flex}
+  .tab-bar{
+    display:flex;flex-wrap:nowrap;gap:6px;margin-top:12px;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .tab-bar::-webkit-scrollbar{display:none}
+  .tab-btn{
+    flex:none;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink-soft);font-family:var(--kor);font-size:12.5px;font-weight:600;
+    padding:6px 11px;border-radius:999px;cursor:pointer;white-space:nowrap;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .tab-btn:hover{border-color:var(--ink-soft)}
+  .tab-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .tab-btn[data-tab="materials"].active{background:var(--green);border-color:var(--green)}
+  .tab-btn[data-tab="questions"].active{background:var(--amber);border-color:var(--amber)}
+  .tab-btn[data-tab="as"].active{background:#9334E6;border-color:#9334E6}
+  .tab-btn[data-tab="expense"].active{background:#0E8A8A;border-color:#0E8A8A}
+  .tab-sep{flex:none;width:1px;background:var(--line);margin:4px 2px;align-self:stretch}
+  .sheet-link{
+    text-decoration:none;background:var(--surface);color:var(--ink-faint);
+    border-color:var(--line-soft);font-size:12px;
+  }
+  .sheet-link:hover{color:var(--ink-soft);border-color:var(--ink-soft)}
+  .sheet-link.active{background:var(--surface);color:var(--ink-faint);border-color:var(--line-soft)}
+  .tab-panel[hidden]{display:none}
+
+  /* ── Stage cards ── */
+  .stage{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);margin-top:16px;overflow:hidden;
+  }
+  .stage-head{
+    display:flex;align-items:center;gap:11px;
+    padding:15px 16px 13px;border-bottom:1px solid var(--line-soft);
+  }
+  .stage-num{
+    flex:none;width:26px;height:26px;border-radius:8px;
+    background:var(--blue);color:#fff;
+    font-family:var(--mono);font-weight:700;font-size:13px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .stage-titles{flex:1;min-width:0}
+  .stage-title-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:0}
+  .stage-title{font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--blue)}
+  .stage-sub{font-size:12px;color:var(--ink-soft)}
+  .stage-count{
+    flex:none;font-family:var(--mono);font-size:13px;font-weight:700;
+    color:var(--ink-faint);font-variant-numeric:tabular-nums;
+  }
+  .stage-count b{color:var(--green-deep)}
+
+  /* checkable row */
+  .item-row{border-top:1px solid var(--line-soft);background:var(--surface)}
+  .item-row.dragging{
+    position:relative;z-index:50;box-shadow:0 10px 24px rgba(20,40,28,.18);
+    border-radius:10px;transition:none!important;
+  }
+  .stage-head + .item-row{border-top:none}
+  .drag-handle{
+    flex:none;width:22px;align-self:stretch;display:grid;
+    grid-template-columns:repeat(2,4px);grid-template-rows:repeat(3,4px);
+    gap:3px;place-content:center;cursor:grab;touch-action:none;
+    margin-left:-4px;
+  }
+  .drag-handle span{width:4px;height:4px;border-radius:50%;background:var(--line);transition:background .15s}
+  .drag-handle:hover span,.item-row.dragging .drag-handle span{background:var(--ink-faint)}
+  .item{
+    display:flex;align-items:flex-start;gap:13px;
+    padding:14px 16px;min-height:54px;cursor:pointer;
+    transition:background .15s;user-select:none;
+  }
+  .item:hover{background:#fafcf9}
+  .item:active{background:var(--green-tint)}
+  .box{
+    flex:none;width:24px;height:24px;margin-top:1px;border-radius:7px;
+    border:2px solid var(--line);background:#fff;position:relative;
+    transition:background .15s,border-color .15s;cursor:pointer;
+  }
+  .box:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .box::after{
+    content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;
+    border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) scale(0);
+    transition:transform .18s cubic-bezier(.3,1.4,.5,1);
+  }
+  .item.done .box{background:var(--green);border-color:var(--green)}
+  .item.done .box::after{transform:rotate(45deg) scale(1)}
+  .item-body{flex:1;min-width:0;cursor:pointer}
+  .item-body:focus-visible{outline:2px solid var(--green);outline-offset:-2px;border-radius:8px}
+  .item-label{font-size:15px;font-weight:600;letter-spacing:-.01em;transition:color .15s}
+  .item.done .item-label{color:var(--ink-faint)}
+  .item-detail{font-size:12.5px;color:var(--ink-soft);margin-top:3px;line-height:1.45;white-space:pre-line}
+  .item-detail[hidden]{display:none}
+  .item.done .item-detail{color:var(--ink-faint)}
+  .item-meta{display:flex;align-items:center;gap:6px;margin-top:5px}
+  .item-meta[hidden]{display:none}
+  .item-extras{padding:0 16px}
+  .meta-pill{
+    font-size:11px;font-weight:700;color:var(--green-deep);background:var(--green-tint);
+    padding:2px 7px;border-radius:999px;display:flex;align-items:center;gap:3px;
+  }
+  .item-tip{
+    display:flex;gap:8px;align-items:flex-start;margin-top:4px;
+    background:var(--green-tint);color:var(--green-deep);
+    padding:7px 11px;border-radius:10px;font-size:12.5px;line-height:1.35;
+  }
+  .item-tip[hidden]{display:none}
+  .item-tip .ico{flex:none;font-size:13px;line-height:1.3}
+  .item-memo{
+    display:flex;gap:8px;align-items:flex-start;margin-top:4px;
+    background:var(--blue-tint);color:var(--blue-deep);
+    padding:7px 11px;border-radius:10px;font-size:12.5px;line-height:1.35;
+  }
+  .item-memo[hidden]{display:none}
+  .item-memo .ico{flex:none;font-size:13px;line-height:1.3}
+  .item-memo .memo-text{word-break:break-word;white-space:pre-line}
+  .memo-author{font-size:11px;font-weight:700;opacity:.75;white-space:nowrap}
+  .item-tip .tip-text{word-break:break-word;white-space:pre-line}
+  .seq{
+    flex:none;font-family:var(--mono);font-size:11.5px;font-weight:700;
+    color:var(--ink-faint);margin-top:3px;min-width:28px;text-align:center;
+    letter-spacing:-.02em;
+  }
+  .item.done .seq{color:var(--green)}
+  .chevron{
+    flex:none;width:18px;height:18px;margin-top:3px;color:var(--ink-faint);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .2s ease;
+  }
+  .item-row.open .chevron{transform:rotate(90deg);color:var(--green-deep)}
+
+  /* expand panel: memo + photo */
+  .item-panel{
+    max-height:0;overflow:hidden;
+    transition:max-height .25s ease;
+    background:#fbfcfa;
+  }
+  .item-row.open .item-panel{max-height:420px}
+  .item-panel-inner{padding:2px 16px 16px 53px}
+  .panel-toolbar{display:flex;gap:8px;margin-bottom:11px}
+  .panel-btn{
+    flex:none;border:1px solid var(--line);background:#fff;
+    color:var(--ink-soft);font-family:var(--kor);font-size:12.5px;font-weight:600;
+    padding:7px 12px;border-radius:999px;cursor:pointer;white-space:nowrap;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .panel-btn:hover{border-color:var(--ink-soft)}
+  .panel-btn.edit.active{border-color:var(--green);color:var(--green-deep);background:var(--green-tint)}
+  .panel-btn.del{color:var(--amber)}
+  .panel-btn.del.confirm{border-color:var(--amber);background:var(--amber-tint)}
+  [contenteditable="true"]{
+    outline:1.5px dashed var(--green);outline-offset:3px;border-radius:6px;
+    background:var(--green-tint);
+  }
+  .field-label{font-size:11.5px;font-weight:700;color:var(--ink-soft);margin-bottom:5px;letter-spacing:.02em}
+  .format-hint{font-size:10.5px;color:var(--ink-faint);margin-bottom:9px;line-height:1.5}
+  .memo{
+    width:100%;min-height:56px;resize:vertical;
+    border:1px solid var(--line);border-radius:10px;padding:9px 11px;
+    font-family:var(--kor);font-size:13.5px;color:var(--ink);background:#fff;
+    box-sizing:border-box;
+  }
+  .memo:focus-visible{outline:2px solid var(--green);outline-offset:1px}
+  .tipinput{border-color:var(--green);min-height:44px}
+  .tipinput:focus-visible{outline-color:var(--green)}
+  .photo-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+  .photo-add{
+    flex:none;width:60px;height:60px;border-radius:10px;
+    border:1.5px dashed var(--line);background:#fff;color:var(--ink-soft);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:10.5px;gap:2px;cursor:pointer;text-align:center;line-height:1.2;
+  }
+  .photo-add:hover{border-color:var(--green)}
+  .photo-add .icon{font-size:17px}
+  .thumb{
+    position:relative;flex:none;width:60px;height:60px;border-radius:10px;
+    overflow:hidden;border:1px solid var(--line);
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb .rm{
+    position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;
+    background:rgba(21,36,28,.65);color:#fff;border:none;font-size:11px;line-height:1;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;
+  }
+
+  /* callouts (non-checkable) */
+  .note{
+    display:flex;gap:10px;align-items:flex-start;
+    margin:0 12px 6px 4px;padding:11px 13px;border-radius:11px;font-size:13px;
+    line-height:1.5;
+  }
+  .stage-head + .note,.item + .note{margin-top:10px}
+  .note.tip{background:var(--green-tint);color:var(--green-deep)}
+  .note.warn{background:var(--amber-tint);color:var(--amber)}
+  .note .ico{flex:none;font-size:14px;line-height:1.4}
+  .note b{font-weight:800}
+
+  /* ── 오늘 작업 (구글시트 연동) ── */
+  .today-section{
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);margin-top:16px;overflow:hidden;
+  }
+  .today-head{
+    display:flex;align-items:center;gap:10px;
+    padding:14px 16px 12px;border-bottom:1px solid var(--line-soft);
+  }
+  .today-badge{
+    flex:none;background:var(--blue);color:#fff;font-family:var(--mono);
+    font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;
+  }
+  .today-title{font-size:16px;font-weight:700;color:var(--blue)}
+  .today-count{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--ink-faint);font-weight:700}
+  .today-sheet-link{
+    flex:none;text-decoration:none;font-size:11.5px;font-weight:600;color:var(--ink-faint);
+    border:1px solid var(--line-soft);padding:4px 9px;border-radius:999px;white-space:nowrap;
+  }
+  .today-sheet-link:hover{color:var(--ink-soft);border-color:var(--ink-soft)}
+  .today-empty{padding:22px 16px;text-align:center;color:var(--ink-faint);font-size:13px}
+  .job-card{padding:14px 16px;border-top:1px solid var(--line-soft)}
+  .today-head + .job-card{border-top:none}
+  .job-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .job-title-group{display:flex;align-items:baseline;gap:6px}
+  .job-seq{font-size:13px;font-weight:800;color:var(--ink);font-family:var(--mono)}
+  .job-name{font-size:15px;font-weight:700}
+  .job-meta{font-size:11.5px;color:var(--ink-soft);font-family:var(--mono)}
+  .job-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px}
+  .job-addr,.job-phone{font-size:13px;color:var(--ink);flex:1;min-width:0;word-break:break-word}
+  .job-btn{
+    flex:none;display:flex;align-items:center;gap:4px;
+    font-size:12.5px;font-weight:700;padding:6px 11px;border-radius:999px;
+    text-decoration:none;white-space:nowrap;margin-right:28px;
+  }
+  .job-btn.nav{background:var(--green-tint);color:var(--green-deep)}
+  .job-btn.call{background:var(--blue-tint);color:var(--blue-deep)}
+  .job-note{margin-top:6px;font-size:12px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .job-remark{margin-top:5px;font-size:12px;color:var(--ink-soft);line-height:1.45;white-space:pre-line}
+  .job-remark[hidden]{display:none}
+  .job-note[hidden]{display:none}
+  .job-memo{
+    display:flex;gap:8px;align-items:flex-start;margin-top:8px;
+    background:var(--blue-tint);color:var(--blue-deep);
+    padding:9px 11px;border-radius:10px;font-size:12.5px;line-height:1.5;white-space:pre-line;
+  }
+  .job-memo[hidden]{display:none}
+  .job-memo .ico{flex:none;font-size:13px;line-height:1.4}
+  .job-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .job-memo-btn{
+    margin-top:8px;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink-soft);font-family:var(--kor);font-size:12px;font-weight:600;
+    padding:6px 11px;border-radius:999px;cursor:pointer;
+  }
+  .job-memo-btn:hover{border-color:var(--ink-soft)}
+  .job-done-btn{
+    margin-top:8px;border:1px solid #ccc;background:var(--surface);
+    color:var(--ink-soft);font-family:var(--kor);font-size:12px;font-weight:700;
+    padding:6px 14px;border-radius:999px;cursor:pointer;
+  }
+  .job-done-btn.done{background:#4caf50;border-color:#4caf50;color:#fff}
+  .job-done-btn.done:hover{background:#43a047}
+  .job-card--done .job-name,.job-card--done .job-addr,
+  .job-card--done .job-phone,.job-card--done .job-meta{
+    text-decoration:line-through;opacity:0.55;
+  }
+  .job-card--done{background:#f5f9f5}
+  .job-done-badge{
+    margin-left:8px;background:#4caf50;color:#fff;
+    font-family:var(--kor);font-size:11px;font-weight:700;
+    padding:2px 9px;border-radius:999px;white-space:nowrap;
+  }
+  .job-done-badge[hidden]{display:none}
+  .job-memo-panel{margin-top:8px}
+  .job-memo-panel[hidden]{display:none}
+  .job-memo-done{
+    margin-top:8px;border:1px solid var(--blue);background:var(--blue);
+    color:#fff;font-family:var(--kor);font-size:12px;font-weight:700;
+    padding:7px 16px;border-radius:999px;cursor:pointer;
+  }
+  .job-memo-done:hover{filter:brightness(0.93)}
+  .job-memo-input{width:100%;min-height:52px;box-sizing:border-box}
+  .expense-top-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .expense-add-btn{margin-top:0;border-radius:12px;flex:1 1 auto}
+  .expense-past-btn{margin-top:0;flex:none}
+  .expense-form{padding:14px 16px;border-bottom:1px solid var(--line-soft);background:#fafcfa}
+  .expense-date-input{width:100%;box-sizing:border-box;font-size:15px;letter-spacing:normal;text-align:left;padding:10px 12px}
+  .expense-photo-btn{margin-top:0}
+  .expense-photo-img{max-width:140px;border-radius:10px;border:1px solid var(--line);display:block;cursor:pointer}
+  .photo-lightbox{
+    position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;
+    display:flex;align-items:center;justify-content:center;padding:20px;
+  }
+  .photo-lightbox[hidden]{display:none}
+  .photo-lightbox img{max-width:100%;max-height:100%;border-radius:8px}
+  .expense-photo{margin-top:8px}
+  .expense-confirm-row{display:flex;align-items:center;gap:14px;margin-top:10px;flex-wrap:wrap}
+  .expense-check{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink-soft)}
+  .expense-check input{width:18px;height:18px}
+  .ju-check{accent-color:#D93025}
+  .o-check{accent-color:#1A73E8}
+  .expense-confirm-btn{width:auto;margin-top:0;padding:8px 18px;background:var(--green);}
+  .expense-confirm-btn:hover{background:var(--green-deep)}
+  .expense-note-btn{margin-top:10px}
+  .expense-note-save{width:auto;margin-top:8px;padding:8px 16px}
+  .expense-edit-panel{padding-top:4px}
+  .expense-photo-status{font-size:11px;color:var(--ink-faint);margin-top:6px}
+  .note-photo-label{margin-top:8px;display:inline-block}
+  .expense-created{color:var(--ink-faint)}
+  .simple-lines{margin-top:7px}
+  .simple-line{font-size:13px;color:var(--ink);margin-top:4px}
+  .job-tag{
+    display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;
+    padding:2px 9px;border-radius:999px;line-height:1.6;
+  }
+
+  footer{text-align:center;color:var(--ink-faint);font-size:12px;margin-top:24px;line-height:1.6}
+  footer .mono{font-family:var(--mono)}
+
+  @media (max-width:360px){
+    h1{font-size:21px}
+    .title-sub{font-size:11px}
+    .tab-btn{font-size:11.5px;padding:6px 9px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
+</style>
+
+<header>
+  <div class="head-inner">
+    <div class="head-row">
+      <h1>작업<span class="title-sub">_체크리스트</span></h1>
+      <button class="reset" id="reset" aria-label="새 작업 시작 (초기화)">새 작업 ↺</button>
+    </div>
+    <div class="thermo" role="progressbar" aria-label="전체 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+      <div class="thermo-bulb" id="bulb"></div>
+      <div class="thermo-tube"><div class="thermo-fill" id="fill"></div></div>
+      <div class="pct" id="pct">0%</div>
+    </div>
+    <div class="done-flag" id="doneFlag">✓ 모든 항목 완료 — 출발 준비 끝</div>
+    <div class="tab-bar" id="tabBar">
+      <button type="button" class="tab-btn active" data-tab="process">작업과정</button>
+      <button type="button" class="tab-btn" data-tab="today">오늘 작업</button>
+      <button type="button" class="tab-btn" data-tab="materials">자재</button>
+      <button type="button" class="tab-btn" data-tab="questions">질문</button>
+      <button type="button" class="tab-btn" data-tab="as">A/S</button>
+      <button type="button" class="tab-btn" data-tab="expense">지출</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="panel-process" class="tab-panel">
+    <div id="app"></div>
+  </div>
+  <div id="panel-today" class="tab-panel" hidden>
+    <div id="todayJobs" class="today-section"></div>
+  </div>
+  <div id="panel-materials" class="tab-panel" hidden>
+    <div id="materialsSection" class="today-section"></div>
+  </div>
+  <div id="panel-questions" class="tab-panel" hidden>
+    <div id="questionsSection" class="today-section"></div>
+  </div>
+  <div id="panel-as" class="tab-panel" hidden>
+    <div id="asSection" class="today-section"></div>
+  </div>
+  <div id="panel-expense" class="tab-panel" hidden>
+    <div id="expenseSection" class="today-section"></div>
+  </div>
+</div>
+
+<footer>
+  <div>□ 탭 → 체크 · 글자 탭 → 메모/사진/수정 펼치기</div>
+  <div style="margin-top:2px">⠿ 좌측 손잡이 누른 채 드래그 → 순서 변경</div>
+  <div style="margin-top:2px">펼친 후 <span class="mono">✏️ 항목 수정</span> · <span class="mono">🗑 항목 삭제</span> 가능</div>
+  <div style="margin-top:4px">핵심 순서 — 포설 → 설치 → 결선</div>
+</footer>
+
+<div class="photo-lightbox" id="photoLightbox" hidden>
+  <img id="photoLightboxImg" src="" alt="확대 이미지">
+</div>
+
+
+<script>
+/* ============================================================
+   홈 화면 추가(설치)를 더 안정적으로 만들기 위한 정식 매니페스트.
+   이미 head에 있는 아이콘 데이터를 재사용해서 만듭니다.
+   ============================================================ */
+(function setupManifest(){
+  try{
+    const iconLink = document.querySelector('link[rel="icon"][sizes="512x512"]');
+    const iconSrc = iconLink ? iconLink.href : '';
+    const manifestObj = {
+      name: "하우스설치 체크리스트",
+      short_name: "하우스설치",
+      start_url: location.origin + location.pathname,
+      scope: location.origin + '/',
+      display: "standalone",
+      background_color: "#EBF0E9",
+      theme_color: "#16894A",
+      icons: iconSrc ? [
+        { src: iconSrc, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+      ] : []
+    };
+    const blob = new Blob([JSON.stringify(manifestObj)], { type: "application/json" });
+    const link = document.createElement('link');
+    link.rel = "manifest";
+    link.href = URL.createObjectURL(blob);
+    document.head.appendChild(link);
+  } catch(err){
+    console.warn('manifest 생성 실패', err);
+  }
+})();
+
+/* ============================================================
+   FIREBASE 설정 — 여기 4개 값을 본인 Firebase 프로젝트 값으로 바꾸세요.
+   (Firebase 콘솔 → 프로젝트 설정 → 일반 → 내 앱 → SDK 설정에서 확인)
+   채우지 않으면 자동으로 "로컬 전용 모드"로 동작합니다 (지금까지와 동일).
+   ============================================================ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAMSPEGrKQ1tgtu-4NfaM8Pus3IGcNkwgY",
+  authDomain: "vinyl-house-check.firebaseapp.com",
+  databaseURL: "https://vinyl-house-check-default-rtdb.firebaseio.com",
+  projectId: "vinyl-house-check"
+};
+
+let db = null;
+try {
+  if (window.firebase && FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY") {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.database();
+  }
+} catch (err) {
+  console.warn('Firebase 초기화 실패 — 로컬 전용 모드로 동작합니다.', err);
+  db = null;
+}
+
+const itemEls = {}; // id -> refs for live-patching from Firebase
+
+function getWorkerInitial(){ return ''; }
+
+// 전화번호 앞자리 0 복원 —
+// 구글시트가 01036502115 를 '숫자'로 인식해 앞의 0을 떼면 1036502115 로 들어옴.
+// 0으로 시작하지 않는 9~10자리는 앞에 0을 붙여 되살리고, 보기 좋게 하이픈을 넣어준다.
+function normalizePhone(v){
+  const raw = String(v == null ? '' : v).trim();
+  if(!raw) return '';
+  if(raw.indexOf('+') === 0) return raw;      // 국제번호는 그대로
+  let d = raw.replace(/[^0-9]/g, '');
+  if(!d) return raw;
+  if(d[0] !== '0' && (d.length === 9 || d.length === 10)) d = '0' + d;
+  if(/^01[0-9]{8,9}$/.test(d)){                // 휴대폰
+    return d.length === 11
+      ? d.slice(0,3) + '-' + d.slice(3,7) + '-' + d.slice(7)
+      : d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6);
+  }
+  if(/^02[0-9]{7,8}$/.test(d)){                // 서울
+    return d.length === 10
+      ? d.slice(0,2) + '-' + d.slice(2,6) + '-' + d.slice(6)
+      : d.slice(0,2) + '-' + d.slice(2,5) + '-' + d.slice(5);
+  }
+  if(/^0[3-9][0-9]{8}$/.test(d)){              // 지역번호 3자리
+    return d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6);
+  }
+  if(/^0[3-9][0-9]{7}$/.test(d)){
+    return d.slice(0,3) + '-' + d.slice(3,6) + '-' + d.slice(6);
+  }
+  return d;
+}
+
+/* ============================================================
+   오늘 작업 — 구글 스프레드시트(웹에 게시 CSV) 연동
+   ============================================================ */
+const PUBLISHED_BASE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR284MFi_okcY_ul2puoPrBus8vO1Js-BT4YtXgKBw2lkSY3wTLYJ4Vw8PLq0ZFAWYn3jxqK4_LviAO/pub?output=csv";
+const TODAY_SHEET_CSV_URL = PUBLISHED_BASE + "&gid=0";
+const MATERIALS_SHEET_CSV_URL = PUBLISHED_BASE + "&gid=114183116";
+const QUESTIONS_SHEET_CSV_URL = PUBLISHED_BASE + "&gid=1741240093";
+const AS_SHEET_CSV_URL = PUBLISHED_BASE + "&gid=293231441";
+// [뿌리 원인 수정] 지출만 '웹에 게시된 CSV'가 아니라 gviz 통로로 읽는다.
+// 게시 CSV는 구글이 몇 분간 묵혀두기 때문에, 확정을 저장해 시트에는 들어갔는데도
+// 곧바로 다시 읽으면 옛 값(확정 안 됨)이 돌아와 체크가 풀린 것처럼 보였다.
+// gviz는 시트의 현재 값을 바로 돌려준다. (칸 이름·값 형식이 게시 CSV와 동일함을 확인함)
+const EXPENSE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/gviz/tq?tqx=out:csv&gid=1764511452";
+const EXPENSE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuiIpbdX7eVA7fQH-GKPC3_WGnmR6e4z0hR8o79Ig8ifPuAo6qKW3AmTpzJd8CMEBfhw/exec";
+const EXPENSE_WRITERS = ['선택', '주영민', '오승윤'];
+
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i=0;i<text.length;i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else {
+      if(c === '"') inQuotes = true;
+      else if(c === ','){ row.push(field); field = ''; }
+      else if(c === '\n' || c === '\r'){
+        if(c === '\r' && text[i+1] === '\n') i++;
+        row.push(field); field = '';
+        rows.push(row); row = [];
+      } else field += c;
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(r => r.length > 1 || r[0] !== '');
+}
+
+function rowsToObjects(rows){
+  if(!rows.length) return [];
+  const headers = rows[0].map(h => h.trim());
+  return rows.slice(1).map(r => {
+    const o = {};
+    headers.forEach((h, idx) => { o[h] = (r[idx] || '').trim(); });
+    return o;
+  });
+}
+
+function isTruthyFlag(v){
+  if(!v) return false;
+  const s = v.trim().toUpperCase();
+  return s === 'O' || s === 'TRUE' || s === 'Y' || s === '1' || s === '예';
+}
+
+function parseSheetDate(str){
+  if(!str) return null;
+  const parts = str.trim().split(/[^0-9]+/).filter(Boolean).map(Number);
+  if(parts.length < 3) return null;
+  let y, m, d;
+  if(String(parts[0]).length === 4){
+    [y, m, d] = parts;
+  } else if(String(parts[2]).length === 4){
+    [m, d, y] = parts;
+  } else {
+    [y, m, d] = parts;
+  }
+  if(y < 100) y += 2000;
+  if(!m || !d || m > 12 || d > 31) return null;
+  return { y, m, d };
+}
+
+function isDateToday(str){
+  const parsed = parseSheetDate(str);
+  if(!parsed) return false;
+  const now = new Date();
+  return parsed.y === now.getFullYear() && parsed.m === (now.getMonth() + 1) && parsed.d === now.getDate();
+}
+
+// 일시적인 네트워크 끊김(와이파이 전환, 화면 꺼짐 후 복귀 등)에 대비해
+// 바로 에러를 보여주기 전에 잠깐 간격을 두고 몇 번 더 조용히 재시도
+async function fetchWithRetry(url, retries = 2, delayMs = 1200){
+  let lastErr;
+  for(let i = 0; i <= retries; i++){
+    try{
+      const res = await fetch(url, { cache: 'no-store' });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      return res;
+    } catch(err){
+      lastErr = err;
+      if(i < retries) await new Promise(r => setTimeout(r, delayMs));
+    }
+  }
+  throw lastErr;
+}
+
+/* ============================================================
+   아이콘 뱃지 — 새 글(행)이 추가되면 홈 화면 아이콘에 숫자로 표시.
+   탭을 열어보면 그 탭의 숫자는 사라짐. (앱이 켜져있을 때만 동작)
+   ============================================================ */
+const lastRawCounts = { today: 0, materials: 0, questions: 0, as: 0, expense: 0 };
+const unreadCounts = { today: 0, materials: 0, questions: 0, as: 0, expense: 0 };
+
+function updateBadge(){
+  const total = Object.values(unreadCounts).reduce((a, b) => a + b, 0);
+  if(!('setAppBadge' in navigator)){
+    console.warn('[뱃지] 이 브라우저는 setAppBadge API를 지원하지 않습니다. (현재 합계:', total, ')');
+    return;
+  }
+  if(total > 0){
+    navigator.setAppBadge(total)
+      .then(() => console.log('[뱃지] setAppBadge(' + total + ') 성공'))
+      .catch(err => console.warn('[뱃지] setAppBadge 실패:', err));
+  } else if('clearAppBadge' in navigator){
+    navigator.clearAppBadge()
+      .then(() => console.log('[뱃지] clearAppBadge 성공'))
+      .catch(err => console.warn('[뱃지] clearAppBadge 실패:', err));
+  }
+}
+
+function trackUnread(key, rawCount){
+  lastRawCounts[key] = rawCount;
+  const lastSeen = Number(localStorage.getItem('lastSeen_' + key) || 0);
+  unreadCounts[key] = Math.max(0, rawCount - lastSeen);
+  updateBadge();
+}
+
+function markSeen(key){
+  if(!(key in lastRawCounts)) return;
+  localStorage.setItem('lastSeen_' + key, String(lastRawCounts[key] || 0));
+  unreadCounts[key] = 0;
+  updateBadge();
+}
+
+function escapeHTML(s){
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// 메모/팁/설명에 간단한 서식 적용: **글자**=굵게, {{색상:글자}}=색깔
+const FORMAT_COLORS = {
+  '빨강':'#D93025', '파랑':'#1A73E8', '초록':'#188038',
+  '주황':'#E37400', '보라':'#9334E6', '검정':'#202124'
+};
+function renderFormatted(raw){
+  let s = escapeHTML(raw);
+  s = s.replace(/\*\*([^\n*]+)\*\*/g, '<b>$1</b>');
+  s = s.replace(/\{\{(빨강|파랑|초록|주황|보라|검정):([^}]+)\}\}/g, (m, color, text) => {
+    return `<span style="color:${FORMAT_COLORS[color]}">${text}</span>`;
+  });
+  return s;
+}
+
+const TAG_COLORS = {
+  '단동': { bg:'#F4CCCC', fg:'#990000' },
+  '복합': { bg:'#F4CCCC', fg:'#990000' },
+  '연동': { bg:'#FFF2CC', fg:'#7F6000' },
+  '양액': { bg:'#FFF2CC', fg:'#7F6000' },
+  'O': { bg:'#D9EAD3', fg:'#274E13' },
+  'X': { bg:'#F4CCCC', fg:'#990000' },
+};
+const TAG_FALLBACK_PALETTE = [
+  { bg:'#DCEAFB', fg:'#1D4ED8' },
+  { bg:'#E3E8FD', fg:'#4338CA' },
+  { bg:'#E3FBEA', fg:'#15803D' },
+  { bg:'#FBE3F3', fg:'#9D174D' },
+];
+function tagColorFor(text){
+  if(TAG_COLORS[text]) return TAG_COLORS[text];
+  let hash = 0;
+  for(let i = 0; i < text.length; i++) hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+  return TAG_FALLBACK_PALETTE[hash % TAG_FALLBACK_PALETTE.length];
+}
+function renderTag(text){
+  if(!text) return '';
+  const c = tagColorFor(text);
+  return `<span class="job-tag" style="background:${c.bg};color:${c.fg}">${escapeHTML(text)}</span>`;
+}
+
+const jobEls = {}; // 순번 -> refs, persists across refreshes so an open memo isn't wiped
+
+function buildJobCard(seqKey){
+  const rowEl = document.createElement('div');
+  rowEl.className = 'job-card';
+  rowEl.innerHTML = `
+    <div class="job-head">
+      <span class="job-name"></span>
+      <span class="job-done-badge" hidden>완료</span>
+      <span class="job-meta"></span>
+    </div>
+    <div class="job-row">
+      <span class="job-addr"></span>
+    </div>
+    <div class="job-row">
+      <span class="job-phone"></span>
+    </div>
+    <div class="job-note" hidden></div>
+    <div class="job-remark" hidden></div>
+    <div class="job-memo" hidden><span class="ico">📝</span><div class="job-memo-text"></div></div>
+    <button type="button" class="job-memo-btn">📝 메모 작성/수정</button>
+    <button type="button" class="job-done-btn">✅ 작업완료</button>
+    <div class="job-memo-panel" hidden>
+      <div class="format-hint">서식: <b>**글자**</b>=굵게 · {{빨강:글자}}=색깔</div>
+      <textarea class="memo job-memo-input" placeholder="메모 입력 (이 폰/PC에서 작성 — 스프레드시트와 무관, 다른 기기와는 동기화됨)"></textarea>
+      <button type="button" class="job-memo-done">✅ 메모 완료</button>
+    </div>`;
+
+  const memoBox = rowEl.querySelector('.job-memo');
+  const memoText = rowEl.querySelector('.job-memo-text');
+  const memoBtn = rowEl.querySelector('.job-memo-btn');
+  const memoPanel = rowEl.querySelector('.job-memo-panel');
+  const memoInput = rowEl.querySelector('.job-memo-input');
+  const memoDoneBtn = rowEl.querySelector('.job-memo-done');
+  const doneBtn = rowEl.querySelector('.job-done-btn');
+
+  function refreshJobMemo(v, by){
+    memoText.innerHTML = renderFormatted(v || '') + (v && by ? ` <span class="memo-author">— ${escapeHTML(by)}</span>` : '');
+    memoBox.hidden = !v;
+  }
+
+  function applyDone(isDone){
+    rowEl.classList.toggle('job-card--done', isDone);
+    doneBtn.classList.toggle('done', isDone);
+    doneBtn.textContent = isDone ? '✅ 완료취소' : '✅ 작업완료';
+    // '완료' 표식 — 완료일이 있으면 날짜까지 같이 보여준다
+    const badge = rowEl.querySelector('.job-done-badge');
+    if(badge){
+      const d = doneDates[seqKey];
+      badge.textContent = (isDone && d) ? ('완료 ' + d.slice(5).replace('-', '/')) : '완료';
+      badge.hidden = !isDone;
+    }
+  }
+
+  // 메모 저장 — 입력 중엔 모아서 저장(부하 감소), 완료/이탈 시 즉시 저장. 저장 위치·형식은 기존과 동일
+  let memoSaveTimer = null, lastSavedMemo = null, memoDirty = false;
+  function saveMemo(immediate){
+    if(memoSaveTimer){ clearTimeout(memoSaveTimer); memoSaveTimer = null; }
+    const doSave = () => {
+      memoSaveTimer = null;
+      // 사용자가 직접 고친 적이 없으면 절대 저장하지 않음
+      // (카드가 새로 그려져 빈 칸일 때 빈 값이 저장돼 메모가 지워지는 것을 막음)
+      if(!memoDirty) return;
+      if(memoInput.value === lastSavedMemo){ memoDirty = false; return; }
+      lastSavedMemo = memoInput.value;
+      memoDirty = false;
+      if(db) db.ref('extras/today/' + seqKey)
+        .update({ memo: memoInput.value, memoBy: getWorkerInitial() })
+        .catch(err => console.warn('메모 동기화 실패', err));
+    };
+    if(immediate) doSave(); else memoSaveTimer = setTimeout(doSave, 600);
+  }
+
+  // 저장돼 있는 메모를 카드에 입힘 (입력 중일 땐 건드리지 않음)
+  function setMemoValue(v, by){
+    const val = v || '';
+    if(document.activeElement === memoInput) return;
+    if(memoInput.value !== val){
+      memoInput.value = val;
+      memoDirty = false;
+    }
+    lastSavedMemo = val;
+    refreshJobMemo(val, by);
+  }
+
+  memoBtn.addEventListener('click', () => {
+    memoPanel.hidden = !memoPanel.hidden;
+    if(!memoPanel.hidden) memoInput.focus();
+  });
+  memoInput.addEventListener('input', () => {
+    memoDirty = true;
+    refreshJobMemo(memoInput.value, getWorkerInitial());
+    saveMemo(false);
+  });
+  memoInput.addEventListener('blur', () => saveMemo(true));
+  memoDoneBtn.addEventListener('click', () => {
+    saveMemo(true);
+    memoPanel.hidden = true;
+    reorderTodayCards();
+  });
+  doneBtn.addEventListener('click', () => {
+    const nowDone = !rowEl.classList.contains('job-card--done');
+    applyDone(nowDone);
+    if(nowDone) doneSeqKeys.add(seqKey); else doneSeqKeys.delete(seqKey);
+    reorderTodayCards();
+    if(db){
+      db.ref('extras/today/' + seqKey).update({ done: nowDone, doneDate: nowDone ? todayStr() : null })
+        .catch(err => console.warn('완료 동기화 실패', err));
+    }
+  });
+
+  jobEls[seqKey] = { rowEl, memoInput, memoBox, memoText, refreshJobMemo, applyDone, setMemoValue };
+  return rowEl;
+}
+
+function updateJobCard(seqKey, o){
+  const refs = jobEls[seqKey];
+  const rowEl = refs.rowEl;
+  const addr = o['주소'] || '';
+  const phone = normalizePhone(o['연락처']);
+  const telHref = 'tel:' + phone.replace(/[^0-9+]/g, '');
+  const navHref = 'https://map.naver.com/p/search/' + encodeURIComponent(addr);
+  const tagBits = [];
+  if(o['단동/연동']) tagBits.push(renderTag(o['단동/연동']));
+  if(o['모델 신청 유형']) tagBits.push(renderTag(o['모델 신청 유형']));
+  if(o['자부담여부']) tagBits.push('자부담 ' + renderTag(o['자부담여부']));
+  const remark = o['비고'] || o['비고1'] || o['비고 1'] || o['비고란'] || '';
+
+  rowEl.querySelector('.job-name').textContent = o['농가명'] || '이름 없음';
+  rowEl.querySelector('.job-meta').textContent = o['설치 희망일'] || '';
+  rowEl.querySelector('.job-addr').textContent = addr;
+  rowEl.querySelector('.job-phone').textContent = phone;
+
+  const addrRow = rowEl.querySelectorAll('.job-row')[0];
+  let navBtn = addrRow.querySelector('.job-btn.nav');
+  if(addr){
+    if(!navBtn){
+      navBtn = document.createElement('a');
+      navBtn.className = 'job-btn nav';
+      navBtn.target = '_blank';
+      navBtn.rel = 'noopener';
+      navBtn.innerHTML = '🗺 길찾기';
+      addrRow.appendChild(navBtn);
+    }
+    navBtn.href = navHref;
+  } else if(navBtn){
+    navBtn.remove();
+  }
+
+  const phoneRow = rowEl.querySelectorAll('.job-row')[1];
+  let callBtn = phoneRow.querySelector('.job-btn.call');
+  if(phone){
+    if(!callBtn){
+      callBtn = document.createElement('a');
+      callBtn.className = 'job-btn call';
+      callBtn.innerHTML = '📞 전화';
+      phoneRow.appendChild(callBtn);
+    }
+    callBtn.href = telHref;
+  } else if(callBtn){
+    callBtn.remove();
+  }
+
+  const noteEl = rowEl.querySelector('.job-note');
+  noteEl.innerHTML = tagBits.join(' · ');
+  noteEl.hidden = tagBits.length === 0;
+
+  const remarkEl = rowEl.querySelector('.job-remark');
+  remarkEl.textContent = remark;
+  remarkEl.hidden = !remark;
+}
+
+function todayStr(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+const doneSeqKeys = new Set(); // 완료 표시된 seqKey 목록
+const doneDates = {};          // seqKey -> 완료일(YYYY-MM-DD)
+let todayExtras = {};          // 마지막으로 받은 메모/완료 정보를 보관
+                               // → 카드를 새로 그려도 저장된 메모를 바로 되살리기 위함
+
+// 저장돼 있는 메모·완료 상태를 카드에 입힘
+function applyJobExtras(seqKey){
+  const refs = jobEls[seqKey];
+  if(!refs) return;
+  const rec = todayExtras[seqKey];
+  if(refs.setMemoValue) refs.setMemoValue((rec && rec.memo) || '', rec && rec.memoBy);
+  if(refs.applyDone) refs.applyDone(!!(rec && rec.done));
+}
+
+// 완료 카드는 맨 뒤로 정렬 (미완료 먼저, 완료는 뒤 / 각 그룹 내 기존 순서 유지)
+function reorderTodayCards(){
+  const container = document.getElementById('todayJobs');
+  if(!container) return;
+  // 메모 입력 중이면 순서 변경을 미룸 — 카드를 옮기면 입력칸 포커스가 풀려 글이 끊김
+  const ae = document.activeElement;
+  if(ae && container.contains(ae) && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT')) return;
+  const keys = Object.keys(jobEls);
+  keys.sort((a, b) => {
+    const ad = doneSeqKeys.has(a) ? 1 : 0;
+    const bd = doneSeqKeys.has(b) ? 1 : 0;
+    if(ad !== bd) return ad - bd;
+    return (jobEls[a].order || 0) - (jobEls[b].order || 0);
+  });
+  // 이미 순서가 같으면 DOM을 건드리지 않음 (불필요한 재배치·깜빡임 방지)
+  const cur = Array.prototype.filter.call(container.children, el => el.classList.contains('job-card'));
+  if(cur.length === keys.length && keys.every((k, i) => cur[i] === jobEls[k].rowEl)) return;
+  keys.forEach(k => container.appendChild(jobEls[k].rowEl));
+}
+
+function renderTodayJobs(objs){
+  const container = document.getElementById('todayJobs');
+  if(!container) return;
+  if(!container.querySelector('.today-count')){
+    Object.keys(jobEls).forEach(k => delete jobEls[k]);
+    container.innerHTML = `
+      <div class="today-head">
+        <span class="today-badge">오늘</span>
+        <span class="today-title">오늘 작업</span>
+        <span class="today-count"></span>
+        <a class="today-sheet-link" href="https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=0" rel="noopener">스프레드시트 바로가기</a>
+      </div>
+      <div class="today-empty" hidden>오늘 표시된 작업이 없습니다</div>`;
+  }
+  const todayWork = v => v && v !== 'FALSE' && String(v).trim() !== '';
+  // 키는 '전체 줄 번호' 기준으로 매긴다 — 오늘 목록에서 빠져도 같은 키가 유지돼야
+  // 완료 표시가 계속 따라붙는다
+  const keyed = objs.map((o, i) => ({ o, key: 'r' + (o['순번'] || o['농가명'] || ('idx' + i)) }));
+  // 오늘 작업 + '완료 표시된 작업'도 함께 보여준다 (날짜가 지나도 남기기 위함)
+  const list = keyed.filter(({ o, key }) =>
+    isDateToday(o['설치 희망일']) || todayWork(o['오늘작업']) || doneSeqKeys.has(key)
+  );
+  const seen = new Set();
+
+  list.forEach(({ o, key: seqKey }, i) => {
+    seen.add(seqKey);
+    if(!jobEls[seqKey]){
+      container.appendChild(buildJobCard(seqKey));
+      applyJobExtras(seqKey); // 새로 만든 카드에 저장된 메모·완료를 바로 되살림
+    }
+    updateJobCard(seqKey, o);
+    jobEls[seqKey].order = i;
+  });
+
+  // 완료한 카드는 날짜가 지나도 '완료' 표시를 단 채로 남긴다 (맨 뒤에 모임)
+  // 미완료 카드만, 오늘 목록에서 빠지면 제거한다
+  Object.keys(jobEls).forEach(seqKey => {
+    if(!seen.has(seqKey) && !doneSeqKeys.has(seqKey)){
+      jobEls[seqKey].rowEl.remove();
+      delete jobEls[seqKey];
+    }
+  });
+  reorderTodayCards();
+
+  container.querySelector('.today-count').textContent = list.length + '건';
+  container.querySelector('.today-empty').hidden = list.length > 0;
+}
+
+async function loadTodayJobs(){
+  const container = document.getElementById('todayJobs');
+  try{
+    const res = await fetchWithRetry(TODAY_SHEET_CSV_URL + '&_=' + Date.now());
+    const text = await res.text();
+    const allObjs = rowsToObjects(parseCSV(text));
+    trackUnread('today', allObjs.length);
+    renderTodayJobs(allObjs);
+  } catch(err){
+    console.warn('오늘 작업 불러오기 실패', err);
+    if(container){
+      container.innerHTML = `
+        <div class="today-head">
+          <span class="today-badge">오늘</span>
+          <span class="today-title">오늘 작업</span>
+          <a class="today-sheet-link" href="https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=0" target="_blank" rel="noopener">스프레드시트 바로가기</a>
+        </div>
+        <div class="today-empty">불러오기 실패 — 잠시 후 다시 시도합니다<br><span style="font-size:11px;font-family:var(--mono);color:var(--amber)">${escapeHTML(err.message || err)}</span></div>`;
+    }
+    return;
+  }
+  if(container) container.dataset.loadedOnce = '1';
+}
+
+if(db){
+  db.ref('extras/today').on('value', snap => {
+    const data = snap.val() || {};
+    todayExtras = data;
+    doneSeqKeys.clear();
+    Object.keys(doneDates).forEach(k => delete doneDates[k]);
+    Object.keys(data).forEach(seqKey => {
+      if(data[seqKey] && data[seqKey].done){
+        doneSeqKeys.add(seqKey);
+        doneDates[seqKey] = data[seqKey].doneDate || '';
+      }
+    });
+    Object.keys(jobEls).forEach(seqKey => applyJobExtras(seqKey));
+    reorderTodayCards();
+  });
+}
+
+loadTodayJobs();
+setInterval(loadTodayJobs, 30000);
+
+// 자재관련 / 질문사항 — 오늘작업과 같은 방식, 메모(앱 자체 저장) 포함한 범용 보드
+function pick(o, ...keys){
+  for(const k of keys){
+    if(o[k] !== undefined && o[k] !== '') return o[k];
+  }
+  return '';
+}
+
+// 헤더 글자가 정확히 안 맞을 때를 대비한 안전망 —
+// 날짜/체크처럼 보이는 칸을 제외하고 가장 긴 글자가 든 칸을 본문으로 추정
+function guessLongestText(o, excludeKeys){
+  let best = '';
+  Object.keys(o).forEach(k => {
+    if(excludeKeys.some(ex => k.replace(/\s/g,'') === ex.replace(/\s/g,''))) return;
+    const v = (o[k] || '').trim();
+    if(/^(TRUE|FALSE)$/i.test(v)) return;
+    if(v.length > best.length) best = v;
+  });
+  return best;
+}
+
+function hashKey(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) >>> 0; }
+  return h.toString(36);
+}
+function sheetDateVal(str){
+  const d = parseSheetDate(str);
+  return d ? d.y*10000 + d.m*100 + d.d : 0;
+}
+
+function createSimpleBoard(opts){
+  const els = {};
+  let extrasCache = {};
+  let lastObjs = [];
+
+  function buildCard(key){
+    const rowEl = document.createElement('div');
+    rowEl.className = 'job-card';
+    rowEl.innerHTML = `
+      <div class="job-head">
+        <span class="job-title-group"><span class="job-seq"></span><span class="job-name"></span></span>
+        <span class="job-meta"></span>
+      </div>
+      <div class="simple-lines"></div>
+      <div class="job-memo" hidden><span class="ico">📝</span><div class="job-memo-text"></div></div>
+      <div class="job-card-actions">
+        <button type="button" class="job-memo-btn">📝 메모 작성/수정</button>
+        ${opts.hideable ? `<button type="button" class="job-memo-btn job-hide-btn">${opts.hideLabel || '🙈 숨기기'}</button>` : ''}
+      </div>
+      <div class="job-memo-panel" hidden>
+        <div class="format-hint">서식: <b>**글자**</b>=굵게 · {{빨강:글자}}=색깔</div>
+        <textarea class="memo job-memo-input" placeholder="메모 입력 (이 폰/PC에서 작성 — 다른 기기와 동기화됨)"></textarea>
+      </div>`;
+    const memoBox = rowEl.querySelector('.job-memo');
+    const memoText = rowEl.querySelector('.job-memo-text');
+    const memoBtn = rowEl.querySelector('.job-memo-btn');
+    const memoPanel = rowEl.querySelector('.job-memo-panel');
+    const memoInput = rowEl.querySelector('.job-memo-input');
+    function refreshMemo(v, by){
+      memoText.innerHTML = renderFormatted(v || '') + (v && by ? ` <span class="memo-author">— ${escapeHTML(by)}</span>` : '');
+      memoBox.hidden = !v;
+    }
+    memoBtn.addEventListener('click', () => {
+      memoPanel.hidden = !memoPanel.hidden;
+      if(!memoPanel.hidden) memoInput.focus();
+    });
+    memoInput.addEventListener('input', () => {
+      const by = getWorkerInitial();
+      refreshMemo(memoInput.value, by);
+      if(db) db.ref(opts.extrasPath + '/' + key).update({ memo: memoInput.value, memoBy: by }).catch(err => console.warn('메모 동기화 실패', err));
+    });
+    if(opts.hideable){
+      rowEl.querySelector('.job-hide-btn').addEventListener('click', () => {
+        if(db) db.ref(opts.extrasPath + '/' + key).update({ hidden: true }).catch(err => console.warn('숨기기 동기화 실패', err));
+        extrasCache[key] = Object.assign({}, extrasCache[key], { hidden: true });
+        render(lastObjs);
+      });
+    }
+    els[key] = { rowEl, memoInput, memoBox, memoText, refreshMemo };
+    return rowEl;
+  }
+
+  function updateCard(key, content){
+    const refs = els[key];
+    refs.rowEl.querySelector('.job-seq').textContent = content.seq != null ? content.seq + '.' : '';
+    refs.rowEl.querySelector('.job-name').textContent = content.title || '';
+    refs.rowEl.querySelector('.job-meta').textContent = content.meta || '';
+    refs.rowEl.querySelector('.simple-lines').innerHTML = content.linesHTML || '';
+  }
+
+  function render(objs){
+    lastObjs = objs;
+    const container = document.getElementById(opts.containerId);
+    if(!container) return;
+    if(!container.querySelector('.today-count')){
+      Object.keys(els).forEach(k => delete els[k]);
+      container.innerHTML = `
+        <div class="today-head">
+          <span class="today-badge" style="background:${opts.badgeColor}">${opts.badgeText}</span>
+          <span class="today-title" style="color:${opts.titleColor}">${opts.titleText}</span>
+          <span class="today-count"></span>
+          <a class="today-sheet-link" href="${opts.sheetUrl}" rel="noopener">스프레드시트 바로가기</a>
+        </div>
+        <div class="today-empty" hidden>${opts.emptyText}</div>`;
+    }
+
+    let list = objs.map(o => ({ o, key: opts.keyFn(o) }));
+
+    if(opts.hideable){
+      list = list.filter(({key}) => !(extrasCache[key] && extrasCache[key].hidden));
+    }
+    if(opts.transformFn){
+      list = opts.transformFn(list);
+    }
+
+    const seen = new Set();
+    list.forEach(({o, key}, idx) => {
+      seen.add(key);
+      if(!els[key]) container.appendChild(buildCard(key));
+      const content = opts.buildContent(o);
+      content.seq = idx + 1;
+      updateCard(key, content);
+    });
+    Object.keys(els).forEach(key => {
+      if(!seen.has(key)){ els[key].rowEl.remove(); delete els[key]; }
+    });
+    container.querySelector('.today-count').textContent = list.length + '건';
+    container.querySelector('.today-empty').hidden = list.length > 0;
+  }
+
+  async function load(){
+    const container = document.getElementById(opts.containerId);
+    try{
+      const res = await fetchWithRetry(opts.csvUrl + '&_=' + Date.now());
+      const text = await res.text();
+      const allObjs = rowsToObjects(parseCSV(text));
+      if(opts.badgeKey) trackUnread(opts.badgeKey, allObjs.length);
+      render(allObjs);
+    } catch(err){
+      console.warn(opts.titleText + ' 불러오기 실패', err);
+      if(container){
+        container.innerHTML = `
+          <div class="today-head">
+            <span class="today-badge" style="background:${opts.badgeColor}">${opts.badgeText}</span>
+            <span class="today-title" style="color:${opts.titleColor}">${opts.titleText}</span>
+          </div>
+          <div class="today-empty">불러오기 실패<br><span style="font-size:11px;font-family:var(--mono)">${escapeHTML(err.message || err)}</span></div>`;
+      }
+    }
+  }
+
+  if(db){
+    db.ref(opts.extrasPath).on('value', snap => {
+      extrasCache = snap.val() || {};
+      Object.keys(els).forEach(key => {
+        const refs = els[key];
+        const rec = extrasCache[key];
+        const memo = (rec && rec.memo) || '';
+        if(document.activeElement !== refs.memoInput && refs.memoInput.value !== memo){
+          refs.memoInput.value = memo;
+          refs.refreshMemo(memo, rec && rec.memoBy);
+        }
+      });
+      if(opts.hideable) render(lastObjs);
+    });
+  }
+
+  return { load };
+}
+
+const materialsBoard = createSimpleBoard({
+  containerId: 'materialsSection',
+  badgeKey: 'materials',
+  csvUrl: MATERIALS_SHEET_CSV_URL,
+  sheetUrl: 'https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=114183116',
+  extrasPath: 'extras/materials',
+  badgeText: '자재', badgeColor: 'var(--green)', titleText: '자재', titleColor: 'var(--green-deep)',
+  emptyText: '등록된 자재 내역이 없습니다',
+  keyFn: o => 'm' + hashKey((o['수령일자']||'') + '|' + (o['항목']||'') + '|' + (o['개수']||'')),
+  // 최신 수령일자 항목만 표시 — 이전 데이터는 스프레드시트에서만 확인
+  transformFn: list => {
+    if(!list.length) return list;
+    let maxVal = -1;
+    list.forEach(({o}) => { const v = sheetDateVal(o['수령일자']); if(v > maxVal) maxVal = v; });
+    return list.filter(({o}) => sheetDateVal(o['수령일자']) === maxVal);
+  },
+  buildContent: o => ({
+    title: o['항목'] || '이름 없음',
+    meta: o['수령일자'] || '',
+    linesHTML: `<div class="simple-line">개수: <b>${escapeHTML(o['개수'] || '')}</b></div>` +
+      (o['비고'] ? `<div class="job-remark">${escapeHTML(o['비고'])}</div>` : '')
+  })
+});
+
+function getQuestionText(o){
+  const named = pick(o,'질문','질 문','질문내용','질문 내용');
+  if(named) return named;
+  return guessLongestText(o, ['일자','일 자','체크','체 크','순번']);
+}
+
+const questionsBoard = createSimpleBoard({
+  containerId: 'questionsSection',
+  badgeKey: 'questions',
+  csvUrl: QUESTIONS_SHEET_CSV_URL,
+  sheetUrl: 'https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=1741240093',
+  extrasPath: 'extras/questions',
+  badgeText: '질문', badgeColor: 'var(--amber)', titleText: '질문', titleColor: 'var(--amber)',
+  emptyText: '등록된 질문이 없습니다',
+  hideable: true,
+  keyFn: o => 'q' + hashKey(pick(o,'일자','일 자') + '|' + getQuestionText(o)),
+  // 미답변은 전부 유지, 답변완료는 최신순으로 합쳐서 총 20개 정도만 유지 (나머지는 스프레드시트에만)
+  transformFn: list => {
+    const unanswered = list.filter(({o}) => !isTruthyFlag(pick(o,'체크','체 크')));
+    const answered = list.filter(({o}) => isTruthyFlag(pick(o,'체크','체 크')))
+      .sort((a,b) => sheetDateVal(pick(b.o,'일자','일 자')) - sheetDateVal(pick(a.o,'일자','일 자')));
+    const keepAnswered = answered.slice(0, Math.max(0, 20 - unanswered.length));
+    return unanswered.concat(keepAnswered)
+      .sort((a,b) => sheetDateVal(pick(b.o,'일자','일 자')) - sheetDateVal(pick(a.o,'일자','일 자')));
+  },
+  buildContent: o => {
+    const checked = isTruthyFlag(pick(o,'체크','체 크'));
+    const badge = checked
+      ? '<span class="job-tag" style="background:#D9EAD3;color:#274E13">답변완료</span>'
+      : '<span class="job-tag" style="background:#FFF2CC;color:#7F6000">대기중</span>';
+    return {
+      title: getQuestionText(o),
+      meta: pick(o,'일자','일 자'),
+      linesHTML: `<div class="simple-line">${badge}</div>`
+    };
+  }
+});
+
+materialsBoard.load();
+const asBoard = createSimpleBoard({
+  containerId: 'asSection',
+  badgeKey: 'as',
+  csvUrl: AS_SHEET_CSV_URL,
+  extrasPath: 'extras/as',
+  badgeText: 'A/S', badgeColor: '#9334E6', titleText: 'A/S', titleColor: '#9334E6',
+  emptyText: '방문예정으로 체크된 A/S 내역이 없습니다',
+  hideable: true,
+  hideLabel: '✅ 처리완료',
+  sheetUrl: 'https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=293231441',
+  keyFn: o => 'a' + hashKey(pick(o,'일자 (접수)','일자') + '|' + pick(o,'농가명') + '|' + pick(o,'내용')),
+  // 스프레드시트에서 "체크 (방문예정)"이 체크된 행만 표시 — 처리완료는 앱에서만 숨김(시트엔 그대로 남음)
+  transformFn: list => list.filter(({o}) => isTruthyFlag(pick(o,'체크 (방문예정)','체크(방문예정)','방문예정'))),
+  buildContent: o => {
+    const received = pick(o,'일자 (접수)','일자(접수)','접수일자','일자');
+    const scheduled = pick(o,'처리일자 (예약)','처리일자(예약)','예약일자','처리일자');
+    const phone = normalizePhone(pick(o,'연락처'));
+    const addr = pick(o,'주소');
+    const content = pick(o,'내용');
+    const telHref = 'tel:' + phone.replace(/[^0-9+]/g, '');
+    const navHref = 'https://map.naver.com/p/search/' + encodeURIComponent(addr);
+
+    let lines = '';
+    if(received) lines += `<div class="simple-line"><b>접수일자: ${escapeHTML(received)}</b></div>`;
+    if(scheduled) lines += `<div class="simple-line"><b>예약일자: ${escapeHTML(scheduled)}</b></div>`;
+    if(phone){
+      lines += `<div class="job-row">
+        <span class="job-phone">${escapeHTML(phone)}</span>
+        <a class="job-btn call" href="${telHref}">📞 전화</a>
+      </div>`;
+    }
+    if(addr){
+      lines += `<div class="job-row">
+        <span class="job-addr">${escapeHTML(addr)}</span>
+        <a class="job-btn nav" href="${navHref}" rel="noopener">🗺 길찾기</a>
+      </div>`;
+    }
+    if(content) lines += `<div class="simple-line">${escapeHTML(content)}</div>`;
+
+    return {
+      title: pick(o,'농가명') || '이름 없음',
+      meta: '',
+      linesHTML: lines
+    };
+  }
+});
+
+asBoard.load();
+setInterval(() => { asBoard.load(); }, 30000);
+
+/* ============================================================
+   지출 — 구글시트에서 읽고, 앱에서 추가/확정/비고 수정하면
+   앱스 스크립트를 통해 시트에 실제로 저장됩니다.
+   ============================================================ */
+const expenseEls = {};
+let expenseExtras = {};
+let expenseLastObjs = [];
+
+function openPhotoLightbox(src){
+  const box = document.getElementById('photoLightbox');
+  const img = document.getElementById('photoLightboxImg');
+  img.src = src;
+  box.hidden = false;
+}
+document.getElementById('photoLightbox').addEventListener('click', () => {
+  document.getElementById('photoLightbox').hidden = true;
+});
+
+function expenseKey(o){
+  const id = pick(o,'ID','id');
+  if(id) return 'e' + id;
+  return 'e' + hashKey(pick(o,'일자') + '|' + pick(o,'항목') + '|' + pick(o,'금액') + '|' + pick(o,'작성자'));
+}
+
+function genExpenseId(){
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+async function postToScript(payload){
+  const res = await fetch(EXPENSE_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  return res.json().catch(() => ({ok:false, error:'응답 해석 실패'}));
+}
+
+// 지출 ID에 심어둔 생성 시각(Date.now 기반)을 되살려 "작성일시"로 표시
+function expenseCreatedAt(id){
+  if(!id) return '';
+  const m = String(id).match(/^[0-9a-z]{8}/);
+  if(!m) return '';
+  const ms = parseInt(m[0], 36);
+  if(!ms || ms < 1500000000000 || ms > Date.now() + 86400000) return '';
+  const d = new Date(ms);
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+// 사진을 적당한 크기로 줄여서 저장 — PC/폰 원본 사진은 용량이 커서 그대로 올리면 느리거나 실패함
+function readPhotoCompressed(file, maxSide = 1400, quality = 0.72){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('read fail'));
+    reader.onload = ev => {
+      const raw = ev.target.result;
+      const img = new Image();
+      img.onerror = () => resolve(raw);
+      img.onload = () => {
+        try{
+          const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+          if(scale === 1 && raw.length < 900000) return resolve(raw);
+          const cv = document.createElement('canvas');
+          cv.width = Math.max(1, Math.round(img.width * scale));
+          cv.height = Math.max(1, Math.round(img.height * scale));
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          resolve(cv.toDataURL('image/jpeg', quality));
+        }catch(err){ resolve(raw); }
+      };
+      img.src = raw;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// 지출 사진 첨부칸 연결 — 파일을 고르면 바로 저장 (비고/수정 패널 공용, 저장 위치는 기존과 동일)
+// 지금 첨부돼 있는 사진을 보여주고 삭제 버튼도 함께 그림 (비고/수정 패널 공용)
+// → 등록·비고·수정 어디서 붙였든 같은 사진이 모든 곳에 똑같이 보임
+function renderExpensePhotoBox(previewEl, key, dataOverride){
+  if(!previewEl || previewEl.dataset.busy === '1') return;
+  const data = dataOverride !== undefined
+    ? dataOverride
+    : ((expenseExtras[key] && expenseExtras[key].photo) || '');
+  if(!data){
+    previewEl.innerHTML = '<div class="expense-photo-status">첨부된 사진 없음</div>';
+    return;
+  }
+  previewEl.innerHTML =
+    `<img src="${data}" class="expense-photo-img" style="margin-top:8px">` +
+    `<div><button type="button" class="job-memo-btn job-hide-btn expense-photo-del">🗑 사진 삭제</button></div>`;
+  previewEl.querySelector('img').onclick = () => openPhotoLightbox(data);
+  previewEl.querySelector('.expense-photo-del').onclick = async () => {
+    if(!confirm('첨부된 영수증 사진을 삭제할까요?\n삭제하면 되돌릴 수 없습니다.')) return;
+    if(!db){ alert('연결이 끊겨 삭제하지 못했습니다.'); return; }
+    try{
+      await db.ref('extras/expenses/' + key).update({ photo: null });
+      renderExpensePhotoBox(previewEl, key, '');
+    }catch(err){
+      alert('삭제 실패 — 잠시 후 다시 시도해주세요.');
+    }
+  };
+}
+
+function wireExpensePhotoInput(input, previewEl, key){
+  if(!input || !previewEl) return;
+  renderExpensePhotoBox(previewEl, key);
+  input.addEventListener('change', async e => {
+    const file = e.target.files[0];
+    input.value = '';
+    if(!file) return;
+    previewEl.dataset.busy = '1';
+    previewEl.innerHTML = '<div class="expense-photo-status">사진 처리 중…</div>';
+    let data;
+    try{ data = await readPhotoCompressed(file); }
+    catch(err){
+      previewEl.dataset.busy = '';
+      previewEl.innerHTML = '<div class="expense-photo-status">사진을 읽지 못했습니다</div>';
+      return;
+    }
+    if(!db){
+      previewEl.dataset.busy = '';
+      previewEl.innerHTML = '<div class="expense-photo-status">연결이 끊겨 저장하지 못했습니다</div>';
+      return;
+    }
+    try{
+      await db.ref('extras/expenses/' + key).update({ photo: data });
+      previewEl.dataset.busy = '';
+      renderExpensePhotoBox(previewEl, key, data);
+    }catch(err){
+      previewEl.dataset.busy = '';
+      previewEl.innerHTML = '<div class="expense-photo-status">저장 실패 — 잠시 후 다시 시도해주세요</div>';
+    }
+  });
+}
+
+function buildExpenseCard(key){
+  const rowEl = document.createElement('div');
+  rowEl.className = 'job-card';
+  rowEl.innerHTML = `
+    <div class="job-head">
+      <span class="job-title-group"><span class="job-seq"></span><span class="job-name"></span></span>
+      <span class="job-meta"></span>
+    </div>
+    <div class="simple-lines"></div>
+    <div class="expense-photo" hidden></div>
+    <div class="expense-confirm-row">
+      <label class="expense-check"><input type="checkbox" class="ju-check"> 주_확정</label>
+      <label class="expense-check"><input type="checkbox" class="o-check"> 오_확정</label>
+      <button type="button" class="code-submit-btn expense-confirm-btn">확정</button>
+    </div>
+    <div class="job-memo" hidden><span class="ico">📝</span><div class="job-memo-text"></div></div>
+    <div class="job-card-actions">
+      <button type="button" class="job-memo-btn expense-note-btn">📝 비고 작성/수정</button>
+      <button type="button" class="job-memo-btn expense-edit-btn">✏️ 수정</button>
+      <button type="button" class="job-memo-btn job-hide-btn expense-del-btn">🗑 삭제</button>
+    </div>
+    <div class="job-memo-panel" hidden>
+      <textarea class="memo expense-note-input" placeholder="비고 입력 (구글시트에 저장됩니다)"></textarea>
+      <label class="job-memo-btn expense-photo-btn note-photo-label">📷 사진 촬영 / 파일 첨부
+        <input type="file" accept="image/*" class="expense-note-photo" hidden>
+      </label>
+      <div class="expense-note-photo-preview"></div>
+      <button type="button" class="code-submit-btn expense-note-save">저장</button>
+    </div>
+    <div class="expense-edit-panel" hidden></div>`;
+  wireExpensePhotoInput(
+    rowEl.querySelector('.expense-note-photo'),
+    rowEl.querySelector('.expense-note-photo-preview'),
+    key
+  );
+  expenseEls[key] = { rowEl };
+  return rowEl;
+}
+
+function updateExpenseCard(key, o){
+  const refs = expenseEls[key];
+  const rowEl = refs.rowEl;
+  const id = pick(o,'ID','id');
+  const date = pick(o,'일자');
+  const item = pick(o,'항목');
+  const amount = pick(o,'금액');
+  const writer = pick(o,'작성자');
+  const shareDate = pick(o,'쉐어 확정일자','쉐어확정일자');
+  const note = pick(o,'비고');
+  const juDone = isTruthyFlag(pick(o,'주_확정여부'));
+  const oDone = isTruthyFlag(pick(o,'오_확정여부'));
+
+  rowEl.querySelector('.job-name').innerHTML = renderTag(item || '항목 없음');
+  rowEl.querySelector('.job-meta').textContent = date || '';
+  const amountNum = Number(String(amount || '').replace(/[^0-9.\-]/g, ''));
+  const amountFmt = amount ? (isNaN(amountNum) ? amount : amountNum.toLocaleString('ko-KR') + '원') : '';
+  const createdAt = expenseCreatedAt(id);
+  rowEl.querySelector('.simple-lines').innerHTML =
+    `<div class="simple-line">작성자: <b>${escapeHTML(writer)}</b> · 금액: <b>${escapeHTML(amountFmt)}</b></div>` +
+    (shareDate ? `<div class="simple-line">쉐어 확정일자: ${escapeHTML(shareDate)}</div>` : '') +
+    (createdAt ? `<div class="simple-line expense-created">작성일시: ${escapeHTML(createdAt)}</div>` : '');
+
+  const photoBox = rowEl.querySelector('.expense-photo');
+  const photo = expenseExtras[key] && expenseExtras[key].photo;
+  if(photo){
+    photoBox.innerHTML = `<img src="${photo}" alt="영수증" class="expense-photo-img">`;
+    photoBox.hidden = false;
+    photoBox.querySelector('img').addEventListener('click', () => openPhotoLightbox(photo));
+  } else {
+    photoBox.hidden = true;
+  }
+  // 비고 패널의 사진칸도 현재 첨부 상태로 맞춰줌 (어디서 붙였든 같은 사진이 보이게)
+  renderExpensePhotoBox(rowEl.querySelector('.expense-note-photo-preview'), key);
+
+  const juCheck = rowEl.querySelector('.ju-check');
+  const oCheck = rowEl.querySelector('.o-check');
+  // 저장이 끝나기 전까지만 화면 새로고침이 체크를 덮어쓰지 않도록 보호
+  if(rowEl.dataset.checkDirty !== '1'){
+    juCheck.checked = juDone;
+    oCheck.checked = oDone;
+  }
+
+  const memoBox = rowEl.querySelector('.job-memo');
+  const memoText = rowEl.querySelector('.job-memo-text');
+  memoText.innerHTML = renderFormatted(note || '');
+  memoBox.hidden = !note;
+  const noteInput = rowEl.querySelector('.expense-note-input');
+  if(document.activeElement !== noteInput) noteInput.value = note || '';
+
+  const confirmBtn = rowEl.querySelector('.expense-confirm-btn');
+
+  // [뿌리 원인 수정] 체크하는 즉시 시트에 저장한다.
+  // 예전에는 '확정'을 눌러야 저장됐고, 그 전까지 체크는 화면에만 있는 임시 표시였다.
+  // 그래서 화면을 다시 그리거나 통신이 한 번 끊기거나 새로고침하면 체크가 그냥 사라졌다.
+  // 덮어쓰기를 막는 장치를 덧대도 구멍이 계속 생겨서, 임시 상태 자체를 없앴다.
+  // ('확정' 버튼도 그대로 동작한다)
+  async function saveConfirm(){
+    rowEl.dataset.checkDirty = '1';
+    rowEl.dataset.savePending = String(Number(rowEl.dataset.savePending || 0) + 1);
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = '저장 중...';
+    const result = await postToScript({
+      action: 'confirm', id, date, item, amount, writer,
+      juConfirmed: juCheck.checked, oConfirmed: oCheck.checked
+    }).catch(err => ({ok:false, error:String(err)}));
+    const left = Math.max(0, Number(rowEl.dataset.savePending || 1) - 1);
+    rowEl.dataset.savePending = String(left);
+    if(left === 0){
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = '확정';
+    }
+    if(!result.ok){
+      // 저장 실패 — 보호를 유지해 체크가 풀리지 않게 두고, 다시 시도할 수 있게 함
+      alert('저장 실패: ' + (result.error || '알 수 없는 오류'));
+      return;
+    }
+    if(left === 0){
+      rowEl.dataset.checkDirty = '';
+      loadExpenses();
+    }
+  }
+  juCheck.onchange = oCheck.onchange = saveConfirm;
+  confirmBtn.onclick = saveConfirm;
+
+  const noteBtn = rowEl.querySelector('.expense-note-btn');
+  const notePanel = rowEl.querySelector('.job-memo-panel');
+  // onclick 으로 지정 — 화면이 갱신될 때마다 클릭 기능이 중복 등록되어
+  // 한 번 눌러도 열림→닫힘이 겹쳐 안 열리던 문제를 막음
+  noteBtn.onclick = () => {
+    notePanel.hidden = !notePanel.hidden;
+    if(!notePanel.hidden) noteInput.focus();
+  };
+  const noteSaveBtn = rowEl.querySelector('.expense-note-save');
+  noteSaveBtn.onclick = async () => {
+    noteSaveBtn.disabled = true;
+    noteSaveBtn.textContent = '저장 중...';
+    const result = await postToScript({
+      action: 'updateNote', id, date, item, amount, writer, note: noteInput.value
+    }).catch(err => ({ok:false, error:String(err)}));
+    noteSaveBtn.disabled = false;
+    noteSaveBtn.textContent = '저장';
+    if(result.ok) loadExpenses();
+    else alert('저장 실패: ' + (result.error || '알 수 없는 오류'));
+  };
+
+  const editBtn = rowEl.querySelector('.expense-edit-btn');
+  const editPanel = rowEl.querySelector('.expense-edit-panel');
+  editBtn.onclick = () => {
+    if(!editPanel.hidden){ editPanel.hidden = true; return; }
+    editPanel.hidden = false;
+    editPanel.innerHTML = `
+      <div class="field-label" style="margin-top:11px">날짜</div>
+      <input type="date" class="code-input expense-date-input edit-date" value="${escapeHTML(date)}">
+      <div class="field-label" style="margin-top:9px">항목</div>
+      <input type="text" class="memo edit-item" value="${escapeHTML(item)}">
+      <div class="field-label" style="margin-top:9px">금액</div>
+      <input type="number" class="code-input expense-date-input edit-amount" value="${escapeHTML(String(amount))}">
+      <div class="field-label" style="margin-top:9px">쉐어 확정일자</div>
+      <input type="date" class="code-input expense-date-input edit-sharedate" value="${escapeHTML(shareDate)}">
+      <div class="field-label" style="margin-top:9px">작성자</div>
+      <select class="code-input expense-date-input edit-writer">
+        ${EXPENSE_WRITERS.map(w => `<option value="${escapeHTML(w)}"${w===writer?' selected':''}>${escapeHTML(w)}</option>`).join('')}
+      </select>
+      <div class="field-label" style="margin-top:9px">영수증 사진</div>
+      <label class="job-memo-btn expense-photo-btn">📷 사진 촬영 / 파일 첨부
+        <input type="file" accept="image/*" class="expense-edit-photo" hidden>
+      </label>
+      <div class="expense-edit-photo-preview"></div>
+      <button type="button" class="code-submit-btn edit-save-btn" style="margin-top:10px">수정 저장</button>`;
+    wireExpensePhotoInput(
+      editPanel.querySelector('.expense-edit-photo'),
+      editPanel.querySelector('.expense-edit-photo-preview'),
+      key
+    );
+    editPanel.querySelector('.edit-save-btn').onclick = async () => {
+      const btn2 = editPanel.querySelector('.edit-save-btn');
+      btn2.disabled = true; btn2.textContent = '저장 중...';
+      const result = await postToScript({
+        action: 'editExpense',
+        id, date, item, amount, writer, // 기존 행을 찾기 위한 기준값
+        newDate: editPanel.querySelector('.edit-date').value,
+        newItem: editPanel.querySelector('.edit-item').value.trim(),
+        newAmount: editPanel.querySelector('.edit-amount').value,
+        newShareDate: editPanel.querySelector('.edit-sharedate').value,
+        newWriter: editPanel.querySelector('.edit-writer').value
+      }).catch(err => ({ok:false, error:String(err)}));
+      btn2.disabled = false; btn2.textContent = '수정 저장';
+      if(result.ok) loadExpenses();
+      else alert('수정 실패: ' + (result.error || '알 수 없는 오류'));
+    };
+  };
+
+  const delBtn = rowEl.querySelector('.expense-del-btn');
+  delBtn.onclick = async () => {
+    if(!confirm(`"${item}" (${amountFmt}) 지출 내역을 삭제할까요?\n시트에서도 완전히 삭제됩니다.`)) return;
+    delBtn.disabled = true;
+    delBtn.textContent = '삭제 중...';
+    const result = await postToScript({ action: 'deleteExpense', id, date, item, amount, writer })
+      .catch(err => ({ok:false, error:String(err)}));
+    delBtn.disabled = false;
+    delBtn.textContent = '🗑 삭제';
+    if(result.ok){
+      loadExpenses();
+    } else if(confirm('시트에서 삭제는 실패했습니다 (오래된 데이터라 못 찾는 경우입니다).\n화면에서만 안 보이게 할까요? (시트엔 그대로 남고, 나중에 시트에서 직접 지우시면 됩니다)')){
+      if(db) db.ref('extras/expenses/' + key).update({ forceHidden: true }).catch(() => {});
+      rowEl.remove();
+    }
+  };
+}
+
+let showingPastExpenses = false;
+
+// 지출 날짜를 숫자로 (최신순 정렬용). 날짜 없는 행은 맨 아래로
+function expenseDateVal(o){
+  const p = parseSheetDate(pick(o,'일자'));
+  return p ? (p.y * 10000 + p.m * 100 + p.d) : -1;
+}
+
+function renderExpenses(objs){
+  expenseLastObjs = objs;
+  const container = document.getElementById('expenseSection');
+  if(!container) return;
+  if(!container.querySelector('.today-count')){
+    Object.keys(expenseEls).forEach(k => delete expenseEls[k]);
+    container.innerHTML = `
+      <div class="today-head">
+        <span class="today-badge" style="background:#0E8A8A">지출</span>
+        <span class="today-title" style="color:#0E8A8A">지출</span>
+        <span class="today-count"></span>
+        <a class="today-sheet-link" href="https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=1764511452" rel="noopener">스프레드시트 바로가기</a>
+      </div>
+      <div class="expense-top-actions">
+        <button type="button" class="code-submit-btn expense-add-btn" id="expenseAddBtn">+ 지출 추가</button>
+        <button type="button" class="job-memo-btn expense-past-btn" id="expensePastBtn">지난 지출 보기</button>
+      </div>
+      <div id="expenseFormBox" hidden></div>
+      <div class="today-empty" hidden></div>`;
+    document.getElementById('expenseAddBtn').addEventListener('click', toggleExpenseForm);
+    document.getElementById('expensePastBtn').addEventListener('click', () => {
+      showingPastExpenses = !showingPastExpenses;
+      Object.keys(expenseEls).forEach(k => { expenseEls[k].rowEl.remove(); delete expenseEls[k]; });
+      renderExpenses(expenseLastObjs);
+    });
+  }
+
+  const pastBtn = document.getElementById('expensePastBtn');
+  pastBtn.textContent = showingPastExpenses ? '현재 지출 보기' : '지난 지출 보기';
+  const emptyEl = container.querySelector('.today-empty');
+  emptyEl.textContent = showingPastExpenses ? '지난 지출 내역이 없습니다' : '등록된 지출 내역이 없습니다';
+
+  // 항목과 금액이 둘 다 채워진 행만 "진짜 지출"로 인정 (서식만 깔린 빈 행 제외)
+  // 주_확정여부와 오_확정여부가 둘 다 체크된 행 = 지난 지출(완료). 그 외 = 현재 지출
+  const list = objs.filter(o => {
+    if(!pick(o,'항목') || !pick(o,'금액')) return false;
+    if(expenseExtras[expenseKey(o)] && expenseExtras[expenseKey(o)].forceHidden) return false;
+    const done = isTruthyFlag(pick(o,'주_확정여부')) && isTruthyFlag(pick(o,'오_확정여부'));
+    return showingPastExpenses ? done : !done;
+  });
+
+  // 가장 최근 날짜가 맨 위로 (같은 날짜면 기존 순서 유지)
+  // 보이는 순서만 바꿀 뿐, 저장된 지출 데이터는 그대로입니다
+  list.sort((a, b) => expenseDateVal(b) - expenseDateVal(a));
+
+  const seen = new Set();
+  list.forEach((o, idx) => {
+    const key = expenseKey(o);
+    seen.add(key);
+    if(!expenseEls[key]) container.insertBefore(buildExpenseCard(key), document.getElementById('expenseFormBox').nextSibling);
+    updateExpenseCard(key, o);
+    const refs = expenseEls[key];
+    refs.rowEl.querySelector('.job-seq').textContent = (idx + 1) + '.';
+  });
+  Object.keys(expenseEls).forEach(key => {
+    if(!seen.has(key)){ expenseEls[key].rowEl.remove(); delete expenseEls[key]; }
+  });
+
+  // 화면 순서를 날짜순에 맞게 재배치 (입력 중이면 건너뜀 — 글이 끊기지 않게)
+  const ae = document.activeElement;
+  const typing = ae && container.contains(ae) && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT');
+  if(!typing){
+    const desired = list.map(o => expenseEls[expenseKey(o)].rowEl);
+    const cur = Array.prototype.filter.call(container.children, el => el.classList.contains('job-card'));
+    const same = cur.length === desired.length && desired.every((el, i) => cur[i] === el);
+    if(!same){
+      let anchor = document.getElementById('expenseFormBox').nextSibling;
+      desired.forEach(el => { container.insertBefore(el, anchor); anchor = el.nextSibling; });
+    }
+  }
+
+  container.querySelector('.today-count').textContent = list.length + '건';
+  container.querySelector('.today-empty').hidden = list.length > 0;
+}
+
+function toggleExpenseForm(){
+  const box = document.getElementById('expenseFormBox');
+  if(!box) return;
+  box.hidden = !box.hidden;
+  if(box.hidden) return;
+  box.innerHTML = `
+    <div class="expense-form">
+      <div class="field-label">날짜</div>
+      <input type="date" id="expDate" class="code-input expense-date-input">
+      <div class="field-label" style="margin-top:9px">항목</div>
+      <input type="text" id="expItem" class="memo" placeholder="예: 주유, 식비 등">
+      <div class="field-label" style="margin-top:9px">금액</div>
+      <input type="number" id="expAmount" class="code-input expense-date-input" placeholder="숫자만 입력">
+      <div class="field-label" style="margin-top:9px">영수증 사진</div>
+      <label class="job-memo-btn expense-photo-btn">📷 사진 촬영 / 파일 첨부
+        <input type="file" accept="image/*" id="expPhoto" hidden>
+      </label>
+      <div id="expPhotoPreview"></div>
+      <div class="field-label" style="margin-top:9px">쉐어 확정일자</div>
+      <input type="date" id="expShareDate" class="code-input expense-date-input">
+      <div class="field-label" style="margin-top:9px">작성자</div>
+      <select id="expWriter" class="code-input expense-date-input">
+        ${EXPENSE_WRITERS.map(w => `<option value="${escapeHTML(w)}">${escapeHTML(w)}</option>`).join('')}
+      </select>
+      <button type="button" class="code-submit-btn" id="expSubmitBtn" style="margin-top:12px">등록</button>
+    </div>`;
+
+  let photoData = '';
+  document.getElementById('expPhoto').addEventListener('change', async e => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const prev = document.getElementById('expPhotoPreview');
+    prev.innerHTML = '<div class="expense-photo-status">사진 처리 중…</div>';
+    try{
+      photoData = await readPhotoCompressed(file);
+    }catch(err){
+      prev.innerHTML = '<div class="expense-photo-status">사진을 읽지 못했습니다</div>';
+      return;
+    }
+    prev.innerHTML = `<img src="${photoData}" class="expense-photo-img" style="margin-top:8px">`;
+    prev.querySelector('img').onclick = () => openPhotoLightbox(photoData);
+  });
+
+  document.getElementById('expSubmitBtn').addEventListener('click', async () => {
+    const date = document.getElementById('expDate').value;
+    const item = document.getElementById('expItem').value.trim();
+    const amount = document.getElementById('expAmount').value;
+    const shareDate = document.getElementById('expShareDate').value;
+    const writer = document.getElementById('expWriter').value;
+    if(!date || !item || !amount){
+      alert('날짜, 항목, 금액은 꼭 입력해주세요.');
+      return;
+    }
+    const btn = document.getElementById('expSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = '등록 중...';
+    const newId = genExpenseId();
+    const result = await postToScript({
+      action: 'addExpense', id: newId, date, item, amount, shareDate, writer,
+      receiptNote: photoData ? '사진있음' : ''
+    }).catch(err => ({ok:false, error:String(err)}));
+    btn.disabled = false;
+    btn.textContent = '등록';
+    if(result.ok){
+      if(photoData && db){
+        db.ref('extras/expenses/e' + newId).update({ photo: photoData }).catch(() => {});
+      }
+      box.hidden = true;
+      loadExpenses();
+    } else {
+      alert('등록 실패: ' + (result.error || '알 수 없는 오류'));
+    }
+  });
+}
+
+async function loadExpenses(){
+  const container = document.getElementById('expenseSection');
+  try{
+    const res = await fetchWithRetry(EXPENSE_SHEET_CSV_URL + '&_=' + Date.now());
+    const text = await res.text();
+    const allObjs = rowsToObjects(parseCSV(text));
+    const realCount = allObjs.filter(o => pick(o,'항목') && pick(o,'금액')).length;
+    trackUnread('expense', realCount);
+    renderExpenses(allObjs);
+  } catch(err){
+    console.warn('지출 불러오기 실패', err);
+    if(container){
+      container.innerHTML = `
+        <div class="today-head">
+          <span class="today-badge" style="background:#0E8A8A">지출</span>
+          <span class="today-title" style="color:#0E8A8A">지출</span>
+        </div>
+        <div class="today-empty">불러오기 실패<br><span style="font-size:11px;font-family:var(--mono)">${escapeHTML(err.message || err)}</span></div>`;
+    }
+  }
+}
+
+if(db){
+  db.ref('extras/expenses').on('value', snap => {
+    expenseExtras = snap.val() || {};
+    renderExpenses(expenseLastObjs);
+  });
+}
+
+loadExpenses();
+setInterval(loadExpenses, 30000);
+
+questionsBoard.load();
+setInterval(() => { materialsBoard.load(); questionsBoard.load(); }, 30000);
+
+// 데이터를 항상 최신으로 유지: 화면 복귀/포커스/네트워크 재연결/캐시 복원 시 전부 다시 받아옴
+// (모바일/PWA 환경에서는 visibilitychange 하나만으로는 누락되는 경우가 있어 여러 신호를 같이 사용)
+function refreshAllData(){
+  loadTodayJobs();
+  materialsBoard.load();
+  questionsBoard.load();
+  asBoard.load();
+  loadExpenses();
+  if(db){
+    try{ db.goOnline(); }catch(err){}
+  }
+}
+['visibilitychange', 'focus', 'pageshow', 'online'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    if(document.visibilityState === 'hidden') return;
+    refreshAllData();
+  });
+});
+
+document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(p => p.hidden = true);
+    document.getElementById('panel-' + btn.dataset.tab).hidden = false;
+    try{ localStorage.setItem('activeTab', btn.dataset.tab); }catch(e){}
+    markSeen(btn.dataset.tab);
+    syncHeaderHeight();
+    window.scrollTo({top:0, behavior:'instant'});
+  });
+});
+
+// 새로고침해도 마지막으로 보던 탭 그대로 유지
+(function restoreActiveTab(){
+  let saved = null;
+  try{ saved = localStorage.getItem('activeTab'); }catch(e){}
+  if(saved){
+    const btn = document.querySelector(`.tab-btn[data-tab="${saved}"]`);
+    if(btn && !btn.classList.contains('active')) btn.click();
+  }
+})();
+
+// 모바일/태블릿 좌우 스와이프로 탭 전환
+(function setupSwipeTabs(){
+  const tabOrder = ['process', 'today', 'materials', 'questions', 'as', 'expense'];
+  let startX = 0, startY = 0, tracking = false;
+
+  document.addEventListener('touchstart', e => {
+    if(e.target.closest('.drag-handle') || e.touches.length !== 1){ tracking = false; return; }
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    if(!tracking) return;
+    tracking = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    if(Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const activeBtn = document.querySelector('.tab-btn[data-tab].active');
+    if(!activeBtn) return;
+    const curIdx = tabOrder.indexOf(activeBtn.dataset.tab);
+    if(curIdx === -1) return;
+    const nextIdx = dx < 0 ? Math.min(curIdx + 1, tabOrder.length - 1) : Math.max(curIdx - 1, 0);
+    if(nextIdx === curIdx) return;
+    const nextBtn = document.querySelector(`.tab-btn[data-tab="${tabOrder[nextIdx]}"]`);
+    if(nextBtn) nextBtn.click();
+  }, { passive: true });
+})();
+
+
+const STAGES = [
+  {
+    title:"준비물", sub:"하우스 타입 확인 후 챙기기",
+    rows:[
+      {t:"check", label:"온도계", detail:"연동 → 2개 / 단동 → 최대 4개. 체인 길이 측정 → 절단 → 온도계 결합"},
+      {t:"check", label:"온도 케이블 (4C / 6C)", detail:"6C 1개, 나머지 전부 4C. 단동은 주름관도 — 하우스 사이 길이보다 약간 길게"},
+      {t:"check", label:"기상대 / 철봉"},
+      {t:"check", label:"인터넷 랜선 · 개폐기 케이블", detail:"개폐기 케이블 6C 1개 (개폐기 일체형이면 케이블 불필요)"},
+      {t:"check", label:"잡자재", detail:"케이블 타이 · 절연 테이프 · 철판 피스 등"},
+    ]
+  },
+  {
+    title:"도착 후 위치 확인", sub:"주인에게 먼저 물어보기",
+    rows:[
+      {t:"check", label:"개폐기 위치", detail:"선을 최종적으로 모아야 할 곳"},
+      {t:"check", label:"인터넷 모뎀 위치"},
+      {t:"check", label:"양액기 위치", detail:"해당 시"},
+    ]
+  },
+  {
+    title:"설치 순서", sub:"포설 → 설치 → 결선",
+    rows:[
+      {t:"check", seq:1, label:"온도계 선 포설"},
+      {t:"check", seq:2, label:"기상대 설치"},
+      {t:"check", seq:3, label:"개폐기 설치", detail:"있을 시"},
+      {t:"check", seq:4, label:"랜선(인터넷선) 포설"},
+      {t:"check", seq:5, label:"고정", detail:"케이블 타이 또는 절연 테이프"},
+      {t:"check", seq:6, label:"온도계 결선"},
+    ]
+  },
+  {
+    title:"마무리 점검", sub:"빠진 것 없이 마감",
+    rows:[
+      {t:"check", label:"남은 자재 전부 챙기기"},
+      {t:"check", label:"부족하거나 빠진 부분 최종 확인"},
+    ]
+  },
+];
+
+const app = document.getElementById('app');
+
+STAGES.forEach((stage, si) => {
+  const card = document.createElement('section');
+  card.className = 'stage';
+
+  const head = document.createElement('div');
+  head.className = 'stage-head';
+  head.innerHTML = `
+    <div class="stage-num">${si+1}</div>
+    <div class="stage-titles">
+      <div class="stage-title-row"><span class="stage-title">${stage.title}</span><span class="stage-sub"> _ ${stage.sub}</span></div>
+    </div>
+    <div class="stage-count" data-stage="${si}"><b>0</b>/0</div>`;
+  card.appendChild(head);
+
+  let itemIndex = 0;
+  stage.rows.forEach((row, ri) => {
+    if(row.t === 'check'){
+      itemIndex++;
+      const itemId = `s${si}_r${ri}`;
+
+      const rowEl = document.createElement('div');
+      rowEl.className = 'item-row';
+      rowEl.dataset.stage = si;
+      rowEl.dataset.id = itemId;
+      rowEl.dataset.defaultOrder = itemIndex;
+
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.dataset.stage = si;
+
+      const handle = document.createElement('div');
+      handle.className = 'drag-handle';
+      handle.setAttribute('aria-label','드래그하여 순서 변경');
+      handle.innerHTML = '<span></span><span></span><span></span><span></span><span></span><span></span>';
+
+      const box = document.createElement('div');
+      box.className = 'box';
+      box.tabIndex = 0;
+      box.setAttribute('role','checkbox');
+      box.setAttribute('aria-checked','false');
+      box.setAttribute('aria-label', row.label + ' 완료 체크');
+
+      const seq = document.createElement('div');
+      seq.className = 'seq';
+      seq.textContent = `${si+1}_${itemIndex}`;
+
+      const body = document.createElement('div');
+      body.className = 'item-body';
+      body.tabIndex = 0;
+      body.setAttribute('role','button');
+      body.setAttribute('aria-expanded','false');
+      body.setAttribute('aria-label', row.label + ' 메모/사진/수정 보기');
+      body.innerHTML = `
+        <div class="item-label">${row.label}</div>
+        <div class="item-meta" hidden></div>`;
+
+      const itemExtras = document.createElement('div');
+      itemExtras.className = 'item-extras';
+      itemExtras.innerHTML = `
+        <div class="item-detail"${row.detail ? '' : ' hidden'}>${row.detail || ''}</div>
+        <div class="item-memo" hidden><span class="ico">📝</span><div class="memo-text"></div></div>
+        <div class="item-tip" hidden><span class="ico">💡</span><div class="tip-text"></div></div>`;
+
+      const labelEl = body.querySelector('.item-label');
+      const detailEl = itemExtras.querySelector('.item-detail');
+      const meta = body.querySelector('.item-meta');
+      const tipBox = itemExtras.querySelector('.item-tip');
+      const tipText = itemExtras.querySelector('.tip-text');
+      const memoBox = itemExtras.querySelector('.item-memo');
+      const memoText = itemExtras.querySelector('.memo-text');
+
+      const chevron = document.createElement('div');
+      chevron.className = 'chevron';
+      chevron.innerHTML = '›';
+      chevron.setAttribute('aria-hidden','true');
+
+      item.appendChild(handle);
+      item.appendChild(box);
+      item.appendChild(seq);
+      item.appendChild(body);
+      item.appendChild(chevron);
+
+      const panel = document.createElement('div');
+      panel.className = 'item-panel';
+      panel.innerHTML = `
+        <div class="item-panel-inner">
+          <div class="panel-toolbar">
+            <button type="button" class="panel-btn edit">✏️ 항목 수정</button>
+            <button type="button" class="panel-btn del">🗑 항목 삭제</button>
+          </div>
+          <div class="format-hint">서식: <b>**글자**</b>=굵게 · {{빨강:글자}}=색깔 (빨강·파랑·초록·주황·보라·검정)</div>
+          <div class="field-label">📋 설명 (체크리스트에 항상 표시)</div>
+          <textarea class="memo detailinput" placeholder="설명 입력 (예: 연동 → 2개 / 단동 → 최대 4개)"></textarea>
+          <div class="field-label" style="margin-top:11px">📝 메모 (체크리스트에 항상 표시)</div>
+          <textarea class="memo" placeholder="메모 입력 (예: 특이사항, 자재 위치 등)"></textarea>
+          <div class="field-label" style="margin-top:11px">💡 팁 (체크리스트에 항상 표시)</div>
+          <textarea class="memo tipinput" placeholder="예: 선은 항상 여유 있게 — 약 1M 정도 더."></textarea>
+          <div class="photo-row">
+            <label class="photo-add">
+              <span class="icon">📷</span>사진 추가
+              <input type="file" accept="image/*" capture="environment" hidden>
+            </label>
+          </div>
+        </div>`;
+
+      rowEl.appendChild(item);
+      rowEl.appendChild(itemExtras);
+      rowEl.appendChild(panel);
+
+      const editBtn = panel.querySelector('.panel-btn.edit');
+      const delBtn = panel.querySelector('.panel-btn.del');
+      const detailInput = panel.querySelector('.detailinput');
+      const tipInput = panel.querySelector('.tipinput');
+      const memo = panel.querySelector('.memo:not(.tipinput):not(.detailinput)');
+      const photoRow = panel.querySelector('.photo-row');
+      const fileInput = panel.querySelector('input[type="file"]');
+      let photoCount = 0;
+      let editing = false;
+
+      function refreshMeta(){
+        const bits = [];
+        if(photoCount > 0) bits.push(`📷 ${photoCount}`);
+        meta.innerHTML = bits.map(b => `<span class="meta-pill">${b}</span>`).join('');
+        meta.hidden = bits.length === 0;
+      }
+
+      function refreshMemo(v, by){
+        const text = v != null ? v : memo.value.trim();
+        memoText.innerHTML = renderFormatted(text) + (text && by ? ` <span class="memo-author">— ${escapeHTML(by)}</span>` : '');
+        memoBox.hidden = !text;
+      }
+
+      function refreshTip(){
+        const v = tipInput.value.trim();
+        tipText.innerHTML = renderFormatted(v);
+        tipBox.hidden = !v;
+      }
+
+      function refreshDetail(){
+        const v = detailInput.value.trim();
+        detailEl.innerHTML = renderFormatted(v);
+        detailEl.hidden = !v;
+      }
+
+      // push a partial update to Firebase (no-op if not configured)
+      function syncWrite(patch){
+        if(!db) return;
+        db.ref('checklist/items/' + itemId).update(patch).catch(err => console.warn('sync 실패', err));
+      }
+
+      detailInput.value = row.detail || '';
+
+      itemEls[itemId] = {
+        rowEl, item, box, labelEl, detailEl, detailInput, meta, tipBox, tipText, memoBox, memoText,
+        memo, tipInput, card, si,
+        isEditing: () => editing,
+        refreshMeta, refreshTip, refreshMemo, refreshDetail
+      };
+
+      detailInput.addEventListener('input', () => { refreshDetail(); syncWrite({ detail: detailInput.value }); });
+      detailInput.addEventListener('click', e => e.stopPropagation());
+
+      tipInput.addEventListener('input', () => { refreshTip(); syncWrite({ tip: tipInput.value }); });
+      tipInput.addEventListener('click', e => e.stopPropagation());
+
+      memo.addEventListener('input', () => {
+        const by = getWorkerInitial();
+        refreshMemo(memo.value.trim(), by);
+        refreshMeta();
+        syncWrite({ memo: memo.value, memoBy: by });
+      });
+      memo.addEventListener('click', e => e.stopPropagation());
+
+      fileInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const thumb = document.createElement('div');
+          thumb.className = 'thumb';
+          thumb.innerHTML = `<img src="${ev.target.result}" alt="첨부 사진"><button class="rm" aria-label="사진 삭제">✕</button>`;
+          thumb.querySelector('.rm').addEventListener('click', evt => {
+            evt.stopPropagation();
+            thumb.remove();
+            photoCount--;
+            refreshMeta();
+          });
+          photoRow.insertBefore(thumb, photoRow.firstChild);
+          photoCount++;
+          refreshMeta();
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = '';
+      });
+
+
+      const toggleCheck = () => {
+        const on = item.classList.toggle('done');
+        box.setAttribute('aria-checked', on ? 'true':'false');
+        syncWrite({ done: on });
+        update();
+      };
+      box.addEventListener('click', e => { e.stopPropagation(); toggleCheck(); });
+      box.addEventListener('keydown', e => {
+        if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); e.stopPropagation(); toggleCheck(); }
+      });
+
+      const toggleExpand = () => {
+        if(editing) return;
+        const open = rowEl.classList.toggle('open');
+        body.setAttribute('aria-expanded', open ? 'true':'false');
+      };
+      body.addEventListener('click', toggleExpand);
+      body.addEventListener('keydown', e => {
+        if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); toggleExpand(); }
+      });
+      chevron.addEventListener('click', toggleExpand);
+
+      // stop propagation from editable fields so editing doesn't collapse the panel
+      labelEl.addEventListener('click', e => { if(editing) e.stopPropagation(); });
+
+      editBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        editing = !editing;
+        labelEl.contentEditable = editing;
+        if(editing){
+          editBtn.textContent = '✅ 수정 완료';
+          editBtn.classList.add('active');
+          labelEl.focus();
+        } else {
+          editBtn.textContent = '✏️ 항목 수정';
+          editBtn.classList.remove('active');
+          if(!labelEl.textContent.trim()) labelEl.textContent = '(제목 없음)';
+          box.setAttribute('aria-label', labelEl.textContent.trim() + ' 완료 체크');
+          body.setAttribute('aria-label', labelEl.textContent.trim() + ' 메모/사진/수정 보기');
+          syncWrite({ label: labelEl.textContent });
+        }
+      });
+
+      let delArmed = false, delTimer = null;
+      delBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        if(!delArmed){
+          delArmed = true;
+          delBtn.classList.add('confirm');
+          delBtn.textContent = '정말 삭제?';
+          delTimer = setTimeout(() => {
+            delArmed = false;
+            delBtn.classList.remove('confirm');
+            delBtn.textContent = '🗑 항목 삭제';
+          }, 3000);
+          return;
+        }
+        clearTimeout(delTimer);
+        rowEl.remove();
+        delete itemEls[itemId];
+        syncWrite({ deleted: true });
+        renumberStage(si);
+        update();
+      });
+
+      // drag-to-reorder (within the same stage) — workflowy-style, mouse + touch via Pointer Events
+      handle.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        if(rowEl.classList.contains('open')) return; // avoid dragging while expanded
+        handle.setPointerCapture(e.pointerId);
+
+        let baseClientY = e.clientY;
+        let baseRect = rowEl.getBoundingClientRect();
+        const rowHeight = baseRect.height;
+        let ended = false;
+        rowEl.classList.add('dragging');
+
+        let pendingY = null;
+        let rafId = null;
+
+        function applyMove(){
+          rafId = null;
+          if(pendingY === null) return;
+          const dy = pendingY - baseClientY;
+          rowEl.style.transform = `translateY(${dy}px)`;
+          const rowMid = baseRect.top + dy + rowHeight / 2;
+
+          const siblings = Array.from(card.querySelectorAll(`.item-row[data-stage="${si}"]`));
+          const idx = siblings.indexOf(rowEl);
+
+          const next = siblings[idx + 1];
+          if(next){
+            const nr = next.getBoundingClientRect();
+            if(rowMid > nr.top + nr.height / 2){
+              card.insertBefore(next, rowEl);
+              // reset transform BEFORE measuring, so the new base position
+              // reflects the element's true layout spot (no stale offset)
+              rowEl.style.transform = 'translateY(0px)';
+              baseRect = rowEl.getBoundingClientRect();
+              baseClientY = pendingY;
+              return;
+            }
+          }
+          const prev = siblings[idx - 1];
+          if(prev){
+            const pr = prev.getBoundingClientRect();
+            if(rowMid < pr.top + pr.height / 2){
+              card.insertBefore(rowEl, prev);
+              rowEl.style.transform = 'translateY(0px)';
+              baseRect = rowEl.getBoundingClientRect();
+              baseClientY = pendingY;
+              return;
+            }
+          }
+        }
+
+        function onMove(ev){
+          pendingY = ev.clientY;
+          if(rafId === null) rafId = requestAnimationFrame(applyMove);
+        }
+
+        function onUp(ev){
+          if(ended) return;
+          ended = true;
+          try{ handle.releasePointerCapture(ev.pointerId); }catch(err){}
+          handle.removeEventListener('pointermove', onMove);
+          handle.removeEventListener('pointerup', onUp);
+          handle.removeEventListener('pointercancel', onUp);
+          handle.removeEventListener('lostpointercapture', onUp);
+          if(rafId !== null){ cancelAnimationFrame(rafId); rafId = null; }
+          rowEl.classList.remove('dragging');
+          rowEl.style.transform = '';
+          renumberStage(si);
+          if(db){
+            const rows = card.querySelectorAll(`.item-row[data-stage="${si}"]`);
+            const updates = {};
+            rows.forEach((r, idx) => { updates[r.dataset.id + '/order'] = idx; });
+            db.ref('checklist/items').update(updates).catch(err => console.warn('순서 동기화 실패', err));
+          }
+        }
+
+        handle.addEventListener('pointermove', onMove);
+        handle.addEventListener('pointerup', onUp);
+        handle.addEventListener('pointercancel', onUp);
+        handle.addEventListener('lostpointercapture', onUp);
+      });
+
+      card.appendChild(rowEl);
+    } else {
+      const note = document.createElement('div');
+      note.className = 'note ' + (row.t === 'warn' ? 'warn':'tip');
+      note.innerHTML = `<span class="ico">${row.t==='warn'?'⚠️':'💡'}</span><div>${row.html}</div>`;
+      card.appendChild(note);
+    }
+  });
+
+  app.appendChild(card);
+});
+
+function renumberStage(si){
+  const rows = document.querySelectorAll(`.item-row[data-stage="${si}"]`);
+  rows.forEach((r, idx) => {
+    const seqEl = r.querySelector('.seq');
+    if(seqEl) seqEl.textContent = `${Number(si)+1}_${idx+1}`;
+  });
+}
+
+// apply a snapshot received from Firebase onto the local DOM,
+// without disturbing fields the local user is actively editing right now.
+function applyRemoteSnapshot(data){
+  data = data || {};
+  let needsUpdate = false;
+
+  Object.keys(itemEls).forEach(id => {
+    const rec = data[id];
+    const refs = itemEls[id];
+    if(!refs) return;
+
+    if(rec && rec.deleted){
+      if(refs.rowEl.parentNode){
+        refs.rowEl.remove();
+        renumberStage(refs.si);
+      }
+      delete itemEls[id];
+      needsUpdate = true;
+      return;
+    }
+    if(!rec) return; // no remote data for this item yet — keep local default
+
+    if(typeof rec.done === 'boolean'){
+      const isDone = refs.item.classList.contains('done');
+      if(isDone !== rec.done){
+        refs.item.classList.toggle('done', rec.done);
+        refs.box.setAttribute('aria-checked', rec.done ? 'true':'false');
+        needsUpdate = true;
+      }
+    }
+    if(!refs.isEditing()){
+      if(typeof rec.label === 'string' && refs.labelEl.textContent !== rec.label){
+        refs.labelEl.textContent = rec.label;
+      }
+    }
+    if(typeof rec.detail === 'string' && document.activeElement !== refs.detailInput && refs.detailInput.value !== rec.detail){
+      refs.detailInput.value = rec.detail;
+      refs.refreshDetail();
+    }
+    if(typeof rec.memo === 'string' && document.activeElement !== refs.memo && refs.memo.value !== rec.memo){
+      refs.memo.value = rec.memo;
+      refs.refreshMemo(rec.memo, rec.memoBy);
+      refs.refreshMeta();
+    }
+    if(typeof rec.tip === 'string' && document.activeElement !== refs.tipInput && refs.tipInput.value !== rec.tip){
+      refs.tipInput.value = rec.tip;
+      refs.refreshTip();
+    }
+  });
+
+  // reorder within each stage according to remote 'order' (best-effort,
+  // only touches relative order among item-rows — leaves note callouts in place)
+  const byStage = {};
+  Object.keys(itemEls).forEach(id => {
+    const refs = itemEls[id];
+    if(!refs.rowEl.parentNode) return;
+    const rec = data[id];
+    const ord = (rec && typeof rec.order === 'number') ? rec.order : Number(refs.rowEl.dataset.defaultOrder);
+    (byStage[refs.si] = byStage[refs.si] || []).push({ ord, rowEl: refs.rowEl });
+  });
+  Object.values(byStage).forEach(list => {
+    list.sort((a,b) => a.ord - b.ord);
+    for(let i=1;i<list.length;i++){
+      const prevEl = list[i-1].rowEl, curEl = list[i].rowEl;
+      if(prevEl.nextElementSibling !== curEl){
+        prevEl.parentNode.insertBefore(curEl, prevEl.nextElementSibling);
+      }
+    }
+  });
+  Object.keys(byStage).forEach(si => renumberStage(si));
+
+  if(needsUpdate) update();
+}
+
+// safety net: if a previous drag's end-event was somehow missed (rare mobile
+// touch quirk), clear any stray "floating" state before the next interaction
+document.addEventListener('pointerdown', () => {
+  document.querySelectorAll('.item-row.dragging').forEach(el => {
+    el.classList.remove('dragging');
+    el.style.transform = '';
+  });
+}, true);
+
+if(db){
+  db.ref('checklist/items').on('value', snap => applyRemoteSnapshot(snap.val()));
+}
+
+const fill = document.getElementById('fill');
+const pct = document.getElementById('pct');
+const bulb = document.getElementById('bulb');
+const bar = document.getElementById('bar');
+const doneFlag = document.getElementById('doneFlag');
+
+function update(){
+  const items = document.querySelectorAll('.item');
+  const total = items.length;
+  let done = 0;
+  const perStageTotal = {}, perStageDone = {};
+  items.forEach(it => {
+    const s = it.dataset.stage;
+    perStageTotal[s] = (perStageTotal[s]||0) + 1;
+    if(it.classList.contains('done')){
+      done++;
+      perStageDone[s] = (perStageDone[s]||0) + 1;
+    }
+  });
+  const p = total ? Math.round(done/total*100) : 0;
+  fill.style.width = p + '%';
+  pct.textContent = p + '%';
+  bar.setAttribute('aria-valuenow', p);
+  bulb.classList.toggle('warm', done > 0);
+  doneFlag.classList.toggle('show', total > 0 && p === 100);
+
+  document.querySelectorAll('.stage-count').forEach(c => {
+    const s = c.dataset.stage;
+    c.innerHTML = `<b>${perStageDone[s]||0}</b>/${perStageTotal[s]||0}`;
+  });
+  syncHeaderHeight();
+}
+
+function syncHeaderHeight(){
+  const h = document.querySelector('header');
+  if(h) document.body.style.paddingTop = h.offsetHeight + 'px';
+}
+window.addEventListener('load', syncHeaderHeight);
+window.addEventListener('resize', syncHeaderHeight);
+
+// reset with two-tap confirm (no popups — robust in any sandbox)
+const resetBtn = document.getElementById('reset');
+let armed = false, armTimer = null;
+resetBtn.addEventListener('click', () => {
+  if(!armed){
+    armed = true;
+    resetBtn.classList.add('confirm');
+    resetBtn.textContent = '정말 초기화?';
+    armTimer = setTimeout(() => {
+      armed = false;
+      resetBtn.classList.remove('confirm');
+      resetBtn.textContent = '새 작업 ↺';
+    }, 3000);
+    return;
+  }
+  clearTimeout(armTimer);
+  armed = false;
+  resetBtn.classList.remove('confirm');
+  resetBtn.textContent = '새 작업 ↺';
+  document.querySelectorAll('.item').forEach(el => {
+    el.classList.remove('done');
+    el.querySelector('.box').setAttribute('aria-checked','false');
+  });
+  document.querySelectorAll('.item-row').forEach(r => r.classList.remove('open'));
+  document.querySelectorAll('.item-body').forEach(b => b.setAttribute('aria-expanded','false'));
+  document.querySelectorAll('.thumb').forEach(t => t.remove());
+  document.querySelectorAll('.item-meta').forEach(m => { m.innerHTML=''; m.hidden=true; });
+  if(db){
+    const updates = {};
+    Object.keys(itemEls).forEach(id => {
+      updates[id + '/done'] = false;
+    });
+    db.ref('checklist/items').update(updates).catch(err => console.warn('초기화 동기화 실패', err));
+  }
+  update();
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+update();
+</script>
