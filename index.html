@@ -438,6 +438,18 @@ if ('serviceWorker' in navigator) {
   .expense-note-btn{margin-top:10px}
   .expense-note-save{width:auto;margin-top:8px;padding:8px 16px}
   .expense-edit-panel{padding-top:4px}
+  .expense-summary{margin:10px 14px 2px;overflow-x:auto}
+  .expense-summary[hidden]{display:none}
+  .exp-sum-cap{font-size:11px;color:var(--ink-faint);margin-bottom:5px}
+  .exp-sum{width:100%;border-collapse:collapse;font-family:var(--kor);font-size:12px}
+  .exp-sum th,.exp-sum td{
+    border:1px solid var(--line);padding:6px 8px;text-align:right;
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .exp-sum th{background:#eaf2f1;color:#0E8A8A;font-weight:700;text-align:center}
+  .exp-sum td.d{text-align:center;color:var(--ink-soft)}
+  .exp-sum td.s{font-weight:700;color:#0E8A8A}
+  .exp-sum tfoot td{background:#f3f8f7;font-weight:700;border-top:2px solid #0E8A8A}
   .expense-photo-status{font-size:11px;color:var(--ink-faint);margin-top:6px}
   .photo-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
   .photo-cell{position:relative;display:inline-block}
@@ -1794,6 +1806,67 @@ function expenseDateVal(o){
   return -1;
 }
 
+// 표에 쓸 날짜 표시 (일자 칸이 비면 작성한 날짜로 대신)
+function expenseDateLabel(o){
+  const p = parseSheetDate(pick(o,'일자'));
+  if(p) return String(p.m).padStart(2,'0') + '/' + String(p.d).padStart(2,'0');
+  const c = expenseCreatedAt(pick(o,'ID','id'));
+  if(c) return c.slice(5, 10).replace('-', '/');
+  return '날짜없음';
+}
+
+// 지출 요약표 — 일자별로 작성자별 금액과 합계, 맨 아래 총계
+function renderExpenseSummary(container, list){
+  const box = container.querySelector('.expense-summary');
+  if(!box) return;
+  if(!list.length){ box.innerHTML = ''; box.hidden = true; return; }
+
+  // 표에 넣을 작성자 — 등록된 순서(주영민, 오승윤)를 먼저 두고, 그 외 이름은 뒤에 붙인다
+  const known = EXPENSE_WRITERS.filter(w => w !== '선택');
+  const nameOf = o => ((pick(o,'작성자') || '').trim() || '기타');
+  const present = [];
+  list.forEach(o => { const w = nameOf(o); if(present.indexOf(w) === -1) present.push(w); });
+  const writers = known.filter(w => present.indexOf(w) !== -1)
+    .concat(present.filter(w => known.indexOf(w) === -1));
+
+  // 일자별로 모으기
+  const byDate = {};
+  const order = [];
+  list.forEach(o => {
+    const v = expenseDateVal(o);
+    if(!byDate[v]){ byDate[v] = { label: expenseDateLabel(o), per: {}, sum: 0 }; order.push(v); }
+    const amt = Number(String(pick(o,'금액') || '').replace(/[^0-9.\-]/g, '')) || 0;
+    const w = nameOf(o);
+    byDate[v].per[w] = (byDate[v].per[w] || 0) + amt;
+    byDate[v].sum += amt;
+  });
+  order.sort((a, b) => b - a); // 최근 날짜가 위
+
+  const won = n => Number(n || 0).toLocaleString('ko-KR');
+  const totalPer = {};
+  let grand = 0;
+  order.forEach(v => {
+    writers.forEach(w => { totalPer[w] = (totalPer[w] || 0) + (byDate[v].per[w] || 0); });
+    grand += byDate[v].sum;
+  });
+
+  box.hidden = false;
+  box.innerHTML =
+    `<div class="exp-sum-cap">${showingPastExpenses ? '지난 지출' : '현재 지출'} 기준 · ${list.length}건</div>` +
+    '<table class="exp-sum"><thead><tr><th>일자</th>' +
+      writers.map(w => `<th>${escapeHTML(w)}</th>`).join('') +
+      '<th>합계</th></tr></thead><tbody>' +
+    order.map(v => {
+      const r = byDate[v];
+      return '<tr><td class="d">' + escapeHTML(r.label) + '</td>' +
+        writers.map(w => `<td>${r.per[w] ? won(r.per[w]) : '-'}</td>`).join('') +
+        `<td class="s">${won(r.sum)}</td></tr>`;
+    }).join('') +
+    '</tbody><tfoot><tr><td class="d">총계</td>' +
+      writers.map(w => `<td>${won(totalPer[w])}</td>`).join('') +
+      `<td class="s">${won(grand)}</td></tr></tfoot></table>`;
+}
+
 function renderExpenses(objs){
   expenseLastObjs = objs;
   const container = document.getElementById('expenseSection');
@@ -1807,6 +1880,7 @@ function renderExpenses(objs){
         <span class="today-count"></span>
         <a class="today-sheet-link" href="https://docs.google.com/spreadsheets/d/18VRc-u5Y9ogE1RrbQZbdmb74LTCt0mOFySsgeXxxFkA/edit#gid=1764511452" rel="noopener">스프레드시트 바로가기</a>
       </div>
+      <div class="expense-summary" hidden></div>
       <div class="expense-top-actions">
         <button type="button" class="code-submit-btn expense-add-btn" id="expenseAddBtn">+ 지출 추가</button>
         <button type="button" class="job-memo-btn expense-past-btn" id="expensePastBtn">지난 지출 보기</button>
@@ -1838,6 +1912,9 @@ function renderExpenses(objs){
   // 가장 최근 날짜가 맨 위로 (같은 날짜면 기존 순서 유지)
   // 보이는 순서만 바꿀 뿐, 저장된 지출 데이터는 그대로입니다
   list.sort((a, b) => expenseDateVal(b) - expenseDateVal(a));
+
+  // 지출 제목 바로 아래 요약표 (일자별 작성자 금액 · 합계 · 총계)
+  renderExpenseSummary(container, list);
 
   const seen = new Set();
   list.forEach((o, idx) => {
