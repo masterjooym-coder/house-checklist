@@ -439,6 +439,15 @@ if ('serviceWorker' in navigator) {
   .expense-note-save{width:auto;margin-top:8px;padding:8px 16px}
   .expense-edit-panel{padding-top:4px}
   .expense-photo-status{font-size:11px;color:var(--ink-faint);margin-top:6px}
+  .photo-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .photo-cell{position:relative;display:inline-block}
+  .photo-cell .expense-photo-img{max-width:110px}
+  .photo-del{
+    position:absolute;top:-6px;right:-6px;width:22px;height:22px;padding:0;
+    border:1px solid var(--line);background:#fff;color:var(--amber);
+    border-radius:50%;font-size:12px;line-height:1;cursor:pointer;
+  }
+  .photo-del:hover{background:var(--amber-tint)}
   .note-photo-label{margin-top:8px;display:inline-block}
   .expense-created{color:var(--ink-faint)}
   .simple-lines{margin-top:7px}
@@ -1449,43 +1458,84 @@ function readPhotoCompressed(file, maxSide = 1400, quality = 0.72){
 // 지출 사진 첨부칸 연결 — 파일을 고르면 바로 저장 (비고/수정 패널 공용, 저장 위치는 기존과 동일)
 // 지금 첨부돼 있는 사진을 보여주고 삭제 버튼도 함께 그림 (비고/수정 패널 공용)
 // → 등록·비고·수정 어디서 붙였든 같은 사진이 모든 곳에 똑같이 보임
-function renderExpensePhotoBox(previewEl, key, dataOverride){
+const MAX_EXPENSE_PHOTOS = 5;
+
+// 저장된 영수증 사진 목록 —
+// 예전 방식(한 장: photo)과 새 방식(여러 장: photos)을 둘 다 읽어서, 기존 사진이 사라지지 않게 한다
+function expensePhotos(key){
+  const rec = expenseExtras[key];
+  if(!rec) return [];
+  if(Array.isArray(rec.photos)) return rec.photos.filter(Boolean);
+  return rec.photo ? [rec.photo] : [];
+}
+
+// 사진 목록 저장 — 옛 방식(photo)에도 첫 장을 같이 적어둬서, 옛 화면에서 열어도 보이게 한다
+function saveExpensePhotos(key, arr){
+  const list = (arr || []).filter(Boolean).slice(0, MAX_EXPENSE_PHOTOS);
+  return db.ref('extras/expenses/' + key).update({
+    photos: list.length ? list : null,
+    photo: list[0] || null
+  });
+}
+
+// 사진 여러 장을 썸네일로 그리고, 각 장마다 삭제 버튼을 붙인다
+function photoGridHTML(list){
+  return '<div class="photo-grid">' + list.map((src, i) =>
+    `<div class="photo-cell"><img src="${src}" class="expense-photo-img">` +
+    `<button type="button" class="photo-del" data-i="${i}" title="이 사진 삭제">✕</button></div>`
+  ).join('') + '</div>' +
+  `<div class="expense-photo-status">사진 ${list.length} / ${MAX_EXPENSE_PHOTOS}장</div>`;
+}
+
+function renderExpensePhotoBox(previewEl, key, listOverride){
   if(!previewEl || previewEl.dataset.busy === '1') return;
-  const data = dataOverride !== undefined
-    ? dataOverride
-    : ((expenseExtras[key] && expenseExtras[key].photo) || '');
-  if(!data){
-    previewEl.innerHTML = '<div class="expense-photo-status">첨부된 사진 없음</div>';
+  const list = listOverride !== undefined ? listOverride : expensePhotos(key);
+  if(!list.length){
+    previewEl.innerHTML = `<div class="expense-photo-status">첨부된 사진 없음 (최대 ${MAX_EXPENSE_PHOTOS}장)</div>`;
     return;
   }
-  previewEl.innerHTML =
-    `<img src="${data}" class="expense-photo-img" style="margin-top:8px">` +
-    `<div><button type="button" class="job-memo-btn job-hide-btn expense-photo-del">🗑 사진 삭제</button></div>`;
-  previewEl.querySelector('img').onclick = () => openPhotoLightbox(data);
-  previewEl.querySelector('.expense-photo-del').onclick = async () => {
-    if(!confirm('첨부된 영수증 사진을 삭제할까요?\n삭제하면 되돌릴 수 없습니다.')) return;
-    if(!db){ alert('연결이 끊겨 삭제하지 못했습니다.'); return; }
-    try{
-      await db.ref('extras/expenses/' + key).update({ photo: null });
-      renderExpensePhotoBox(previewEl, key, '');
-    }catch(err){
-      alert('삭제 실패 — 잠시 후 다시 시도해주세요.');
-    }
-  };
+  previewEl.innerHTML = photoGridHTML(list);
+  previewEl.querySelectorAll('.photo-cell img').forEach((img, i) => {
+    img.onclick = () => openPhotoLightbox(list[i]);
+  });
+  previewEl.querySelectorAll('.photo-del').forEach(btn => {
+    btn.onclick = async () => {
+      const i = Number(btn.dataset.i);
+      if(!confirm(`${i + 1}번째 영수증 사진을 삭제할까요?\n삭제하면 되돌릴 수 없습니다.`)) return;
+      if(!db){ alert('연결이 끊겨 삭제하지 못했습니다.'); return; }
+      const next = list.slice(0, i).concat(list.slice(i + 1));
+      try{
+        await saveExpensePhotos(key, next);
+        renderExpensePhotoBox(previewEl, key, next);
+      }catch(err){
+        alert('삭제 실패 — 잠시 후 다시 시도해주세요.');
+      }
+    };
+  });
 }
 
 function wireExpensePhotoInput(input, previewEl, key){
   if(!input || !previewEl) return;
   renderExpensePhotoBox(previewEl, key);
   input.addEventListener('change', async e => {
-    const file = e.target.files[0];
+    const files = Array.from(e.target.files || []);
     input.value = '';
-    if(!file) return;
+    if(!files.length) return;
+    const current = expensePhotos(key);
+    const room = MAX_EXPENSE_PHOTOS - current.length;
+    if(room <= 0){
+      alert(`사진은 최대 ${MAX_EXPENSE_PHOTOS}장까지입니다.\n새로 넣으려면 기존 사진을 먼저 지워주세요.`);
+      return;
+    }
+    const picked = files.slice(0, room);
+    const skipped = files.length - picked.length;
     previewEl.dataset.busy = '1';
-    previewEl.innerHTML = '<div class="expense-photo-status">사진 처리 중…</div>';
-    let data;
-    try{ data = await readPhotoCompressed(file); }
-    catch(err){
+    previewEl.innerHTML = `<div class="expense-photo-status">사진 ${picked.length}장 처리 중…</div>`;
+    const added = [];
+    for(const f of picked){
+      try{ added.push(await readPhotoCompressed(f)); }catch(err){ /* 한 장 실패해도 나머지는 계속 */ }
+    }
+    if(!added.length){
       previewEl.dataset.busy = '';
       previewEl.innerHTML = '<div class="expense-photo-status">사진을 읽지 못했습니다</div>';
       return;
@@ -1495,10 +1545,12 @@ function wireExpensePhotoInput(input, previewEl, key){
       previewEl.innerHTML = '<div class="expense-photo-status">연결이 끊겨 저장하지 못했습니다</div>';
       return;
     }
+    const next = current.concat(added);
     try{
-      await db.ref('extras/expenses/' + key).update({ photo: data });
+      await saveExpensePhotos(key, next);
       previewEl.dataset.busy = '';
-      renderExpensePhotoBox(previewEl, key, data);
+      renderExpensePhotoBox(previewEl, key, next);
+      if(skipped > 0) alert(`최대 ${MAX_EXPENSE_PHOTOS}장까지라 ${skipped}장은 넣지 않았습니다.`);
     }catch(err){
       previewEl.dataset.busy = '';
       previewEl.innerHTML = '<div class="expense-photo-status">저장 실패 — 잠시 후 다시 시도해주세요</div>';
@@ -1530,7 +1582,7 @@ function buildExpenseCard(key){
     <div class="job-memo-panel" hidden>
       <textarea class="memo expense-note-input" placeholder="비고 입력 (구글시트에 저장됩니다)"></textarea>
       <label class="job-memo-btn expense-photo-btn note-photo-label">📷 사진 촬영 / 파일 첨부
-        <input type="file" accept="image/*" class="expense-note-photo" hidden>
+        <input type="file" accept="image/*" multiple class="expense-note-photo" hidden>
       </label>
       <div class="expense-note-photo-preview"></div>
       <button type="button" class="code-submit-btn expense-note-save">저장</button>
@@ -1569,11 +1621,15 @@ function updateExpenseCard(key, o){
     (createdAt ? `<div class="simple-line expense-created">작성일시: ${escapeHTML(createdAt)}</div>` : '');
 
   const photoBox = rowEl.querySelector('.expense-photo');
-  const photo = expenseExtras[key] && expenseExtras[key].photo;
-  if(photo){
-    photoBox.innerHTML = `<img src="${photo}" alt="영수증" class="expense-photo-img">`;
+  const photos = expensePhotos(key);
+  if(photos.length){
+    photoBox.innerHTML = '<div class="photo-grid">' +
+      photos.map(src => `<img src="${src}" alt="영수증" class="expense-photo-img">`).join('') +
+      '</div>';
     photoBox.hidden = false;
-    photoBox.querySelector('img').addEventListener('click', () => openPhotoLightbox(photo));
+    photoBox.querySelectorAll('img').forEach((img, i) => {
+      img.onclick = () => openPhotoLightbox(photos[i]);
+    });
   } else {
     photoBox.hidden = true;
   }
@@ -1671,7 +1727,7 @@ function updateExpenseCard(key, o){
       </select>
       <div class="field-label" style="margin-top:9px">영수증 사진</div>
       <label class="job-memo-btn expense-photo-btn">📷 사진 촬영 / 파일 첨부
-        <input type="file" accept="image/*" class="expense-edit-photo" hidden>
+        <input type="file" accept="image/*" multiple class="expense-edit-photo" hidden>
       </label>
       <div class="expense-edit-photo-preview"></div>
       <button type="button" class="code-submit-btn edit-save-btn" style="margin-top:10px">수정 저장</button>`;
@@ -1814,7 +1870,7 @@ function toggleExpenseForm(){
       <input type="number" id="expAmount" class="code-input expense-date-input" placeholder="숫자만 입력">
       <div class="field-label" style="margin-top:9px">영수증 사진</div>
       <label class="job-memo-btn expense-photo-btn">📷 사진 촬영 / 파일 첨부
-        <input type="file" accept="image/*" id="expPhoto" hidden>
+        <input type="file" accept="image/*" multiple id="expPhoto" hidden>
       </label>
       <div id="expPhotoPreview"></div>
       <div class="field-label" style="margin-top:9px">쉐어 확정일자</div>
@@ -1826,20 +1882,43 @@ function toggleExpenseForm(){
       <button type="button" class="code-submit-btn" id="expSubmitBtn" style="margin-top:12px">등록</button>
     </div>`;
 
-  let photoData = '';
-  document.getElementById('expPhoto').addEventListener('change', async e => {
-    const file = e.target.files[0];
-    if(!file) return;
+  // 등록 폼에서 고른 사진들 (최대 MAX_EXPENSE_PHOTOS장)
+  const photoList = [];
+  function drawNewExpensePhotos(){
     const prev = document.getElementById('expPhotoPreview');
-    prev.innerHTML = '<div class="expense-photo-status">사진 처리 중…</div>';
-    try{
-      photoData = await readPhotoCompressed(file);
-    }catch(err){
-      prev.innerHTML = '<div class="expense-photo-status">사진을 읽지 못했습니다</div>';
+    if(!prev) return;
+    if(!photoList.length){
+      prev.innerHTML = `<div class="expense-photo-status">첨부된 사진 없음 (최대 ${MAX_EXPENSE_PHOTOS}장)</div>`;
       return;
     }
-    prev.innerHTML = `<img src="${photoData}" class="expense-photo-img" style="margin-top:8px">`;
-    prev.querySelector('img').onclick = () => openPhotoLightbox(photoData);
+    prev.innerHTML = photoGridHTML(photoList);
+    prev.querySelectorAll('.photo-cell img').forEach((img, i) => {
+      img.onclick = () => openPhotoLightbox(photoList[i]);
+    });
+    prev.querySelectorAll('.photo-del').forEach(btn => {
+      btn.onclick = () => { photoList.splice(Number(btn.dataset.i), 1); drawNewExpensePhotos(); };
+    });
+  }
+  drawNewExpensePhotos();
+
+  document.getElementById('expPhoto').addEventListener('change', async e => {
+    const files = Array.from(e.target.files || []);
+    e.target.value = '';
+    if(!files.length) return;
+    const prev = document.getElementById('expPhotoPreview');
+    const room = MAX_EXPENSE_PHOTOS - photoList.length;
+    if(room <= 0){
+      alert(`사진은 최대 ${MAX_EXPENSE_PHOTOS}장까지입니다.\n새로 넣으려면 기존 사진을 먼저 지워주세요.`);
+      return;
+    }
+    const picked = files.slice(0, room);
+    const skipped = files.length - picked.length;
+    prev.innerHTML = `<div class="expense-photo-status">사진 ${picked.length}장 처리 중…</div>`;
+    for(const f of picked){
+      try{ photoList.push(await readPhotoCompressed(f)); }catch(err){ /* 한 장 실패해도 나머지는 계속 */ }
+    }
+    drawNewExpensePhotos();
+    if(skipped > 0) alert(`최대 ${MAX_EXPENSE_PHOTOS}장까지라 ${skipped}장은 넣지 않았습니다.`);
   });
 
   document.getElementById('expSubmitBtn').addEventListener('click', async () => {
@@ -1858,13 +1937,16 @@ function toggleExpenseForm(){
     const newId = genExpenseId();
     const result = await postToScript({
       action: 'addExpense', id: newId, date, item, amount, shareDate, writer,
-      receiptNote: photoData ? '사진있음' : ''
+      receiptNote: photoList.length ? '사진있음' : ''
     }).catch(err => ({ok:false, error:String(err)}));
     btn.disabled = false;
     btn.textContent = '등록';
     if(result.ok){
-      if(photoData && db){
-        db.ref('extras/expenses/e' + newId).update({ photo: photoData }).catch(() => {});
+      if(photoList.length && db){
+        // 새 방식(photos)과 옛 방식(photo) 둘 다 기록
+        db.ref('extras/expenses/e' + newId)
+          .update({ photos: photoList.slice(), photo: photoList[0] })
+          .catch(() => {});
       }
       box.hidden = true;
       loadExpenses();
